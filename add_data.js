@@ -25,44 +25,46 @@ function addNewOrUpdate(db) {
     console.log("\n--- Add or Update Content ---");
     let courseNames = db.courses.map(c => c.name);
     let cIndex = readline.keyInSelect(courseNames, 'Select Course:');
-    let cName = (cIndex === -1) ? readline.question('Enter New Course Name: ') : courseNames[cIndex];
+    if (cIndex === -1) return;
+    let cName = courseNames[cIndex];
 
     let course = db.courses.find(c => c.name === cName);
-    if (!course) { course = { name: cName, subjects: [] }; db.courses.push(course); }
 
     let subjectNames = course.subjects.map(s => s.name);
     let sIndex = readline.keyInSelect(subjectNames, 'Select Subject:');
-    let sName = (sIndex === -1) ? readline.question('Enter New Subject Name: ') : subjectNames[sIndex];
+    if (sIndex === -1) return;
+    let sName = subjectNames[sIndex];
 
     let sub = course.subjects.find(s => s.name === sName);
-    if (!sub) { sub = { name: sName, chapters: [] }; course.subjects.push(sub); }
 
-    // --- CHAPTER SELECTION LOGIC ---
+    // --- STEP 1: SIRF CHAPTER NAMES KI LIST ---
     let chapterOptions = sub.chapters.map(ch => ch.title);
-    chapterOptions.push("ADD NEW CHAPTER"); // Hamesha last option naya chapter add karne ka
+    chapterOptions.push("ADD NEW CHAPTER"); 
     
-    console.log("\n--- Select Chapter to Update or Add New ---");
-    let chIndex = readline.keyInSelect(chapterOptions, 'Choose Option:');
+    console.log("\n--- Select Chapter ---");
+    let chIndex = readline.keyInSelect(chapterOptions, 'Choose Chapter:');
 
-    if (chIndex === -1) return; // Cancel
+    if (chIndex === -1) return;
 
     let chName, existingChapter = null;
 
     if (chIndex === chapterOptions.length - 1) {
-        // Naya Chapter Add Karna
+        // Naya Chapter
         chName = readline.question('Enter New Chapter Title: ');
     } else {
-        // Purana Chapter Update Karna
+        // Purana Chapter select kiya
         existingChapter = sub.chapters[chIndex];
         chName = existingChapter.title;
-        console.log("Updating existing chapter: " + chName);
+        console.log("\nSelected: " + chName);
     }
 
+    // --- STEP 2: AB DETAILS PUCHEGA ---
+    console.log("\n--- Enter Details for: " + chName + " ---");
     let link = readline.question('Lecture Link: ', {defaultInput: existingChapter ? existingChapter.url : ''});
-    let notesEn = readline.question('Eng Notes (Skip if none): ', {defaultInput: existingChapter ? existingChapter.notes_en : ''});
-    let notesHi = readline.question('Hindi Notes (Skip if none): ', {defaultInput: existingChapter ? existingChapter.notes_hi : ''});
-    let quiz = readline.question('Quiz Link (Skip if none): ', {defaultInput: existingChapter ? existingChapter.quiz : ''});
-    let hand = readline.question('Handwritten (Skip if none): ', {defaultInput: existingChapter ? existingChapter.handwritten : ''});
+    let notesEn = readline.question('English Notes Link: ', {defaultInput: existingChapter ? existingChapter.notes_en : ''});
+    let notesHi = readline.question('Hindi Notes Link: ', {defaultInput: existingChapter ? existingChapter.notes_hi : ''});
+    let quiz = readline.question('Quiz Link: ', {defaultInput: existingChapter ? existingChapter.quiz : ''});
+    let ppt = readline.question('PPT/Handwritten Link: ', {defaultInput: existingChapter ? existingChapter.handwritten : ''});
 
     let newChapterData = { 
         title: chName, 
@@ -70,7 +72,7 @@ function addNewOrUpdate(db) {
         notes_en: notesEn || null, 
         notes_hi: notesHi || null, 
         quiz: quiz || null, 
-        handwritten: hand || null 
+        handwritten: ppt || null 
     };
 
     if (existingChapter) {
@@ -80,13 +82,13 @@ function addNewOrUpdate(db) {
     }
     
     saveDB(db);
-    console.log('\n✅ Successfully saved!');
+    console.log('\n✅ Chapter Details Updated Successfully!');
 }
 
 function manageData(db) {
     console.log("\n--- Manage/Delete Data ---");
     let cNames = db.courses.map(c => c.name);
-    let ci = readline.keyInSelect(cNames, 'Select Course to Manage:');
+    let ci = readline.keyInSelect(cNames, 'Select Course:');
     if (ci === -1) return;
 
     let sNames = db.courses[ci].subjects.map(s => s.name);
