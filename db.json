@@ -27,16 +27,7 @@
         {
           "name": "ECONOMICS",
           "chapters": [],
-          "CHAPTERS": [
-            {
-              "title": "BASICS OF ECONOMY - LEC 1",
-              "url": "https://www.youtube.com/live/UANZRZ6Mk9c?si=5ZhOi-eSQc3ubPDm",
-              "notes_en": "https://space.opprovider10.workers.dev/?file=M5HWO5CXHFBFAZRSOMZDKT3TGNIAEVZG",
-              "notes_hi": "https://space.opprovider10.workers.dev/?file=HFAXMN3WJNLTE4DQOFBVQNTENGZEAPVV",
-              "quiz": "https://space.opprovider10.workers.dev/?file=LJYUW33DI5SHI2TGO5QVKWJYK66RBWVV",
-              "handwritten": "https://space.opprovider10.workers.dev/?file=OR2VA5DGOZUHS2K2KRHU26SNGED7ISJC"
-            }
-          ]
+          "CHAPTERS": []
         }
       ]
     }
