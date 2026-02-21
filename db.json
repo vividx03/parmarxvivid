@@ -27,7 +27,16 @@
         {
           "name": "ECONOMICS",
           "chapters": [],
-          "CHAPTERS": []
+          "CHAPTERS": [
+            {
+              "title": "BASICS OF ECONOMY - LEC 1",
+              "url": "https://www.youtube.com/live/UANZRZ6Mk9c?si=4OBP3ctinElN219J",
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": null
+            }
+          ]
         }
       ]
     }
