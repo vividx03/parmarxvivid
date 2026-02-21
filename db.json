@@ -1,0 +1,20 @@
+{
+  "courses": [
+    {
+      "name": "PARMAR 4.0",
+      "subjects": [
+        {
+          "name": "BIOLOGY",
+          "chapters": [
+            {
+              "title": "BIOLOGY LEC - 1",
+              "url": "https://www.youtube.com/live/PSoL_URbbrk?si=nHHi4hEL5yfLYDXY",
+              "notes_en": "",
+              "notes_hi": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
