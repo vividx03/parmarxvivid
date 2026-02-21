@@ -13,6 +13,17 @@
               "notes_hi": ""
             }
           ]
+        },
+        {
+          "name": "ECONOMICS",
+          "chapters": [
+            {
+              "title": "BASIC OF ECONOMY",
+              "url": "",
+              "notes_en": "",
+              "notes_hi": ""
+            }
+          ]
         }
       ]
     }
