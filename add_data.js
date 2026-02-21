@@ -8,6 +8,7 @@ function main() {
     let db = loadDB();
     const options = ['Add/Update Content', 'Manage/Delete Data'];
     const index = readline.keyInSelect(options, 'What do you want to do?');
+    
     if (index === 0) addNewOrUpdate(db);
     else if (index === 1) manageData(db);
 }
@@ -18,11 +19,27 @@ function addNewOrUpdate(db) {
     if (cIndex === -1) return;
     let course = db.courses[cIndex];
 
+    // Subjects ki list + Add New ka option
     let subjectNames = course.subjects.map(s => s.name);
+    subjectNames.push("ADD NEW SUBJECT (+)"); 
+    
     let sIndex = readline.keyInSelect(subjectNames, 'Select Subject:');
     if (sIndex === -1) return;
-    let sub = course.subjects[sIndex];
 
+    // Agar user ne "ADD NEW SUBJECT" select kiya
+    if (sIndex === subjectNames.length - 1) {
+        let newSubName = readline.question('Enter New Subject Name: ').toUpperCase();
+        if (course.subjects.some(s => s.name === newSubName)) {
+            console.log('❌ Subject already exists!');
+            return;
+        }
+        course.subjects.push({ name: newSubName, CHAPTERS: [], "WEEKLY TESTS": [] });
+        saveDB(db);
+        console.log('✅ Subject "' + newSubName + '" added! Now run script again to add data.');
+        return;
+    }
+
+    let sub = course.subjects[sIndex];
     const types = ['CHAPTERS', 'WEEKLY TESTS'];
     let tIndex = readline.keyInSelect(types, 'Select Category:');
     if (tIndex === -1) return;
