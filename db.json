@@ -86,11 +86,19 @@
           "CHAPTERS": [
             {
               "title": "BASICS OF ECONOMY - LEC 1",
-              "url": "https://www.youtube.com/live/UANZRZ6Mk9c?si=4OBP3ctinElN219J",
-              "notes_en": null,
-              "notes_hi": null,
-              "quiz": null,
-              "handwritten": null
+              "url": "https://www.youtube.com/live/UANZRZ6Mk9c",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b01d58400b2ce4be1d9cf",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b01df8400b2ce4be1d9d1",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b01e58400b2ce4be1d9d3",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b01ed8400b2ce4be1d9d5"
+            },
+            {
+              "title": "MICROECONOMICS - LEC 2",
+              "url": "https://hell-fs1-oot-c9eb9b92ba45.herokuapp.com/watch/699b02cf8400b2ce4be1d9d7",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b032d8400b2ce4be1d9d9",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b03348400b2ce4be1d9db",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b03498400b2ce4be1d9dd",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b03538400b2ce4be1d9df"
             }
           ]
         },
