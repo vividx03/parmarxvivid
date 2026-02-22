@@ -227,7 +227,80 @@
         },
         {
           "name": "REVISION CLASSES",
-          "CHAPTERS": [],
+          "CHAPTERS": [
+            {
+              "title": "ALL COMPUTER QUESTIONS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b135a8400b2ce4be1da6f",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13618400b2ce4be1da71",
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "POLITY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b13678400b2ce4be1da73",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13728400b2ce4be1da75",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b137b8400b2ce4be1da77",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b13818400b2ce4be1da79",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13888400b2ce4be1da7b",
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "ECONOMICS REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b138e8400b2ce4be1da7d",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13978400b2ce4be1da7f",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b139d8400b2ce4be1da81",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "ANCIENT HISTORY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b13a78400b2ce4be1da83",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13ad8400b2ce4be1da85",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13d58400b2ce4be1da87",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "MODERN HISTORY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b13dc8400b2ce4be1da89",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13e48400b2ce4be1da8b",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13eb8400b2ce4be1da8d",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "MEDIEVAL HISTORY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b13f28400b2ce4be1da8f",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13f98400b2ce4be1da91",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b13ff8400b2ce4be1da93",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "BIOLOGY REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b14098400b2ce4be1da95",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b14128400b2ce4be1da97",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b141a8400b2ce4be1da99",
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "STATIC GK REVISION CLASS",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=699b14218400b2ce4be1da9b",
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b14388400b2ce4be1da9d",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=699b14408400b2ce4be1da9f",
+              "quiz": null,
+              "handwritten": null
+            }
+          ],
           "WEEKLY TESTS": []
         }
       ]
