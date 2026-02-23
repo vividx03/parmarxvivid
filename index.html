@@ -15,18 +15,18 @@
         .btn-gradient { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .search-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 15px; }
         .hidden { display: none; }
-        
-        /* Modal Styling for Video Pop-up */
-        #video-modal { background: rgba(0, 0, 0, 0.9); z-index: 9999; }
+        #video-modal { background: rgba(0, 0, 0, 0.95); z-index: 9999; }
         .modal-content { width: 95%; max-width: 500px; }
         video { width: 100%; border-radius: 12px; }
     </style>
 </head>
 <body class="p-4 pb-24">
     <div id="video-modal" class="fixed inset-0 hidden flex items-center justify-center p-4">
-        <div class="modal-content glass-card p-4 relative">
-            <button onclick="closeVideo()" class="absolute -top-10 right-0 text-white text-3xl">&times;</button>
+        <div class="modal-content glass-card p-6 relative">
+            <button onclick="closeVideo()" class="absolute -top-12 right-0 text-white text-3xl">&times;</button>
+            <p id="wait-msg" class="text-blue-300 text-xs text-center mb-4 italic">Please wait, the lecture will start within 1 minute...</p>
             <div id="video-player-container"></div>
+            <div id="download-btn-container" class="mt-4"></div>
         </div>
     </div>
 
@@ -39,16 +39,13 @@
         <div id="search-container" class="mb-6">
             <div class="search-box flex items-center px-4 py-3">
                 <i class="fas fa-search text-blue-400 mr-3"></i>
-                <input type="text" id="courseSearch" placeholder="Search your course..." 
-                    class="bg-transparent border-none outline-none w-full text-white placeholder-gray-500 text-sm"
-                    onkeyup="filterCourses()">
+                <input type="text" id="courseSearch" placeholder="Search your course..." class="bg-transparent border-none outline-none w-full text-white placeholder-gray-500 text-sm" onkeyup="filterCourses()">
             </div>
         </div>
 
         <h2 id="view-title" class="text-xl font-semibold mb-6 text-center uppercase tracking-widest text-blue-200">COURSES</h2>
-
         <div id="course-list" class="grid gap-4"></div>
-        <div id="no-results" class="hidden text-center py-10 text-gray-500 italic">No course found with that name.</div>
+        <div id="no-results" class="hidden text-center py-10 text-gray-500 italic">No course found.</div>
 
         <div id="subject-section" class="hidden grid gap-4">
             <div id="subject-list" class="grid gap-4"></div>
@@ -82,7 +79,6 @@
         
         function renderCourses() { 
             document.getElementById('view-title').innerText = "AVAILABLE COURSES"; 
-            document.getElementById('search-container').classList.remove('hidden');
             const list = document.getElementById('course-list'); list.innerHTML = ''; 
             mainData.courses.forEach((c, i) => { 
                 list.innerHTML += `<div onclick="selectCourse(${i})" class="glass-card p-6 text-center cursor-pointer course-item">
@@ -119,12 +115,8 @@
 
         function showCategories(si) { 
             curS = si; document.getElementById('category-list').innerHTML = `
-                <div onclick="showItems('CHAPTERS')" class="glass-card p-6 border-l-4 border-blue-500 cursor-pointer flex items-center">
-                    <i class="fas fa-book-open mr-4 text-blue-500"></i> <span class="font-bold">CHAPTER-WISE CONTENT</span>
-                </div>
-                <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-6 border-l-4 border-green-500 cursor-pointer flex items-center">
-                    <i class="fas fa-vial mr-4 text-green-500"></i> <span class="font-bold">WEEKLY MOCK TESTS</span>
-                </div>`; 
+                <div onclick="showItems('CHAPTERS')" class="glass-card p-6 border-l-4 border-blue-500 cursor-pointer flex items-center"><i class="fas fa-book-open mr-4 text-blue-500"></i> <span class="font-bold">CHAPTER-WISE CONTENT</span></div>
+                <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-6 border-l-4 border-green-500 cursor-pointer flex items-center"><i class="fas fa-vial mr-4 text-green-500"></i> <span class="font-bold">WEEKLY MOCK TESTS</span></div>`; 
             toggle('category-section'); 
         }
 
@@ -136,10 +128,10 @@
                 list.innerHTML += `<div class="glass-card p-5 mb-4 border-t-2 border-blue-500/20">
                     <h4 class="font-bold mb-4 text-blue-100 text-sm leading-tight">${ch.title}</h4>
                     <div class="grid grid-cols-2 gap-3 text-[10px] font-bold">
-                        ${isHTML ? `<button onclick="playVideo('${btoa(ch.url)}')" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</button>` : (ch.url ? `<a href="${ch.url}" target="_blank" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</a>` : '')}
+                        ${isHTML ? `<button onclick="playVideo('${btoa(ch.url)}', '${ch.download_url || ""}')" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</button>` : (ch.url ? `<a href="${ch.url}" target="_blank" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</a>` : '')}
                         ${ch.notes_en ? `<a href="${ch.notes_en}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">ENG NOTES</a>` : ''}
                         ${ch.notes_hi ? `<a href="${ch.notes_hi}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">HINDI NOTES</a>` : ''}
-                        ${ch.quiz ? `<a href="${ch.quiz}" target="_blank" class="bg-indigo-600 p-3 rounded-xl text-center">ATTEMPT QUIZ</a>` : ''}
+                        ${ch.quiz ? `<a href="${ch.quiz}" target="_blank" class="bg-indigo-600 p-3 rounded-xl text-center uppercase">Attempt Quiz</a>` : ''}
                         ${ch.handwritten ? `<a href="${ch.handwritten}" target="_blank" class="bg-teal-600 p-3 rounded-xl text-center">PPT/PDF</a>` : ''}
                     </div>
                 </div>`; 
@@ -147,23 +139,15 @@
             toggle('content-section'); 
         }
 
-        // Logic to Play Video in Modal
-        function playVideo(encodedHTML) {
-            const decodedHTML = atob(encodedHTML);
-            document.getElementById('video-player-container').innerHTML = decodedHTML;
+        function playVideo(encodedHTML, dLink) {
+            document.getElementById('video-player-container').innerHTML = atob(encodedHTML);
+            const dContainer = document.getElementById('download-btn-container');
+            dContainer.innerHTML = dLink ? `<a href="${dLink}" target="_blank" class="block w-full bg-green-600 p-3 rounded-xl text-center text-xs font-bold"><i class="fas fa-download mr-2"></i> DOWNLOAD LECTURE</a>` : '';
             document.getElementById('video-modal').classList.remove('hidden');
         }
 
-        function closeVideo() {
-            document.getElementById('video-player-container').innerHTML = '';
-            document.getElementById('video-modal').classList.add('hidden');
-        }
-
-        function toggle(id) { 
-            ['course-list', 'subject-section', 'category-section', 'content-section'].forEach(d => document.getElementById(d).classList.add('hidden')); 
-            document.getElementById(id).classList.remove('hidden'); 
-            window.scrollTo(0,0);
-        }
+        function closeVideo() { document.getElementById('video-player-container').innerHTML = ''; document.getElementById('video-modal').classList.add('hidden'); }
+        function toggle(id) { ['course-list', 'subject-section', 'category-section', 'content-section'].forEach(d => document.getElementById(d).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); window.scrollTo(0,0); }
         loadData();
     </script>
 </body>

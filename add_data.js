@@ -56,10 +56,8 @@ function addNewOrUpdate(db) {
     if (itemIndex === list.length - 1) title = readline.question('Enter Title: ');
     else { existing = sub[cat][itemIndex]; title = existing.title; }
 
-    // --- NEW MULTILINE LOGIC ---
     console.log("\n[LECTURE LINK / HTML CODE]");
-    console.log("1. Paste your code/link below.");
-    console.log("2. Press ENTER, then type 'DONE' and press ENTER again to finish.");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
     
     let lines = [];
     while (true) {
@@ -70,12 +68,18 @@ function addNewOrUpdate(db) {
     let link = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
     if (!link && existing) link = existing.url;
 
+    // DOWNLOAD LINK LOGIC
+    let dLink = existing ? existing.download_url : null;
+    if (link && link.includes('<')) {
+        dLink = readline.question('Lecture Download Link: ', {defaultInput: existing ? existing.download_url : ''});
+    }
+
     let nEn = readline.question('Eng Notes: ', {defaultInput: existing ? existing.notes_en : ''});
     let nHi = readline.question('Hindi Notes: ', {defaultInput: existing ? existing.notes_hi : ''});
     let quiz = readline.question('Quiz: ', {defaultInput: existing ? existing.quiz : ''});
     let ppt = readline.question('PPT/Other: ', {defaultInput: existing ? existing.handwritten : ''});
 
-    let newData = { title, url: link || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
+    let newData = { title, url: link || null, download_url: dLink || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
     if (existing) sub[cat][itemIndex] = newData; else sub[cat].push(newData);
     saveDB(db);
     console.log('\n✅ Saved Successfully!');
@@ -85,11 +89,9 @@ function manageData(db) {
     let cIndex = readline.keyInSelect(db.courses.map(c => c.name), 'Select Course:');
     if (cIndex === -1) return;
     if (readline.keyInYN('Delete "' + db.courses[cIndex].name + '"?')) {
-        if (readline.keyInYN('Double Confirm?')) {
-            db.courses.splice(cIndex, 1);
-            saveDB(db);
-            console.log('🗑️ Deleted!');
-        }
+        db.courses.splice(cIndex, 1);
+        saveDB(db);
+        console.log('🗑️ Deleted!');
     }
 }
 main();
