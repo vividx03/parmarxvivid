@@ -67,8 +67,13 @@ function addNewOrUpdate(db) {
     if (itemIndex === list.length - 1) title = readline.question('Enter Title: ');
     else { existing = sub[cat][itemIndex]; title = existing.title; }
 
-    console.log("\nTIP: Link section mein aap Direct Link ya poora <video> tag daal sakte hain.");
-    let link = readline.question('Lecture Link/HTML: ', {defaultInput: existing ? existing.url : ''});
+    // THE FIX: Handling long HTML tags carefully
+    console.log("\n--- LECTURE LINK/HTML ---");
+    console.log("Paste your code and press ENTER. (If it's multi-line, it will be cleaned automatically)");
+    let linkInput = readline.question('Lecture Link/HTML: ', {defaultInput: existing ? existing.url : ''});
+    // Remove potential extra newlines from paste
+    let link = linkInput.replace(/(\r\n|\n|\r)/gm, " ").trim();
+
     let nEn = readline.question('Eng Notes: ', {defaultInput: existing ? existing.notes_en : ''});
     let nHi = readline.question('Hindi Notes: ', {defaultInput: existing ? existing.notes_hi : ''});
     let quiz = readline.question('Quiz: ', {defaultInput: existing ? existing.quiz : ''});
@@ -77,7 +82,7 @@ function addNewOrUpdate(db) {
     let newData = { title, url: link || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
     if (existing) sub[cat][itemIndex] = newData; else sub[cat].push(newData);
     saveDB(db);
-    console.log('\n✅ Saved!');
+    console.log('\n✅ Saved Successfully!');
 }
 
 function manageData(db) {
