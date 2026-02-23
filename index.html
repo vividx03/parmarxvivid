@@ -18,7 +18,6 @@
         #video-modal { background: rgba(0, 0, 0, 0.95); z-index: 9999; }
         .modal-content { width: 95%; max-width: 500px; }
         video { width: 100%; border-radius: 12px; }
-        /* Highlighted Wait Message */
         #wait-msg { color: #facc15; font-weight: 600; text-shadow: 0 0 8px rgba(250, 204, 21, 0.3); border-bottom: 1px solid rgba(250, 204, 21, 0.2); padding-bottom: 8px; }
     </style>
 </head>
@@ -81,9 +80,12 @@
         
         function renderCourses() { 
             document.getElementById('view-title').innerText = "AVAILABLE COURSES"; 
+            document.getElementById('search-container').classList.remove('hidden');
             const list = document.getElementById('course-list'); list.innerHTML = ''; 
             mainData.courses.forEach((c, i) => { 
-                list.innerHTML += `<div onclick="selectCourse(${i})" class="glass-card p-6 text-center cursor-pointer course-item">
+                // FIXED REDIRECT LOGIC
+                let action = c.directLink ? `window.open('${c.directLink}', '_blank')` : `selectCourse(${i})`;
+                list.innerHTML += `<div onclick="${action}" class="glass-card p-6 text-center cursor-pointer course-item">
                     <div class="text-blue-400 text-2xl mb-2"><i class="fas fa-graduation-cap"></i></div>
                     <div class="font-bold text-lg">${c.name}</div>
                     <div class="text-blue-300/60 text-[11px] mt-1 italic uppercase">${c.teacher || 'VIVID ACADEMY'}</div>
@@ -105,6 +107,7 @@
 
         function selectCourse(i) { 
             curC = i; document.getElementById('search-container').classList.add('hidden');
+            document.getElementById('view-title').innerText = mainData.courses[i].name;
             const list = document.getElementById('subject-list'); list.innerHTML = ''; 
             mainData.courses[i].subjects.forEach((s, si) => { 
                 list.innerHTML += `<div onclick="showCategories(${si})" class="glass-card p-5 flex justify-between items-center cursor-pointer">
@@ -116,7 +119,8 @@
         }
 
         function showCategories(si) { 
-            curS = si; document.getElementById('category-list').innerHTML = `
+            curS = si; document.getElementById('view-title').innerText = mainData.courses[curC].subjects[si].name;
+            document.getElementById('category-list').innerHTML = `
                 <div onclick="showItems('CHAPTERS')" class="glass-card p-6 border-l-4 border-blue-500 cursor-pointer flex items-center"><i class="fas fa-book-open mr-4 text-blue-500"></i> <span class="font-bold">CHAPTER-WISE CONTENT</span></div>
                 <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-6 border-l-4 border-green-500 cursor-pointer flex items-center"><i class="fas fa-vial mr-4 text-green-500"></i> <span class="font-bold">WEEKLY MOCK TESTS</span></div>`; 
             toggle('category-section'); 
@@ -124,6 +128,7 @@
 
         function showItems(type) { 
             const items = mainData.courses[curC].subjects[curS][type] || []; 
+            document.getElementById('view-title').innerText = type;
             const list = document.getElementById('chapter-list'); list.innerHTML = ''; 
             items.forEach((ch, idx) => { 
                 let isHTML = ch.url && ch.url.includes('<');
@@ -131,10 +136,10 @@
                     <h4 class="font-bold mb-4 text-blue-100 text-sm leading-tight">${ch.title}</h4>
                     <div class="grid grid-cols-2 gap-3 text-[10px] font-bold">
                         ${isHTML ? `<button onclick="playVideo('${btoa(ch.url)}', '${ch.download_url || ""}')" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</button>` : (ch.url ? `<a href="${ch.url}" target="_blank" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</a>` : '')}
-                        ${ch.notes_en ? `<a href="${ch.notes_en}" target=\"_blank\" class=\"bg-slate-700 p-3 rounded-xl text-center\">ENG NOTES</a>` : ''}
-                        ${ch.notes_hi ? `<a href="${ch.notes_hi}" target=\"_blank\" class=\"bg-slate-700 p-3 rounded-xl text-center\">HINDI NOTES</a>` : ''}
-                        ${ch.quiz ? `<a href="${ch.quiz}" target=\"_blank\" class=\"bg-indigo-600 p-3 rounded-xl text-center uppercase\">Attempt Quiz</a>` : ''}
-                        ${ch.handwritten ? `<a href="${ch.handwritten}" target=\"_blank\" class=\"bg-teal-600 p-3 rounded-xl text-center\">PPT/PDF</a>` : ''}
+                        ${ch.notes_en ? `<a href="${ch.notes_en}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">ENG NOTES</a>` : ''}
+                        ${ch.notes_hi ? `<a href="${ch.notes_hi}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">HINDI NOTES</a>` : ''}
+                        ${ch.quiz ? `<a href="${ch.quiz}" target="_blank" class="bg-indigo-600 p-3 rounded-xl text-center uppercase">Attempt Quiz</a>` : ''}
+                        ${ch.handwritten ? `<a href="${ch.handwritten}" target="_blank" class="bg-teal-600 p-3 rounded-xl text-center">PPT/PDF</a>` : ''}
                     </div>
                 </div>`; 
             }); 
@@ -145,12 +150,9 @@
             document.getElementById('video-player-container').innerHTML = atob(encodedHTML);
             const dContainer = document.getElementById('download-btn-container');
             dContainer.innerHTML = dLink ? `<a href="${dLink}" target="_blank" class="block w-full bg-green-600 p-3 rounded-xl text-center text-xs font-bold"><i class="fas fa-download mr-2"></i> DOWNLOAD LECTURE</a>` : '';
-            
-            // Show message and set timer to hide after 60s
             const msg = document.getElementById('wait-msg');
             msg.style.display = 'block';
             setTimeout(() => { msg.style.display = 'none'; }, 60000);
-
             document.getElementById('video-modal').classList.remove('hidden');
         }
 
