@@ -20,7 +20,19 @@
     <script>
         let mainData = null, curC = null, curS = null;
         function loadData() { fetch('db.json?v=' + Date.now()).then(res => res.json()).then(data => { mainData = data; renderCourses(); }); }
-        function renderCourses() { document.getElementById('view-title').innerText = "COURSES"; const list = document.getElementById('course-list'); list.innerHTML = ''; mainData.courses.forEach((c, i) => { list.innerHTML += `<div onclick="selectCourse(${i})" class="glass p-5 rounded-xl border-2 border-yellow-500/50 text-yellow-500 font-bold text-center cursor-pointer uppercase">${c.name}</div>`; }); toggle('course-list'); }
+        
+        function renderCourses() { 
+            document.getElementById('view-title').innerText = "COURSES"; 
+            const list = document.getElementById('course-list'); 
+            list.innerHTML = ''; 
+            mainData.courses.forEach((c, i) => { 
+                // Agar course mein directLink hai toh sidha window.open chalega
+                let clickAction = c.directLink ? `window.open('${c.directLink}', '_blank')` : `selectCourse(${i})`;
+                list.innerHTML += `<div onclick="${clickAction}" class="glass p-5 rounded-xl border-2 border-yellow-500/50 text-yellow-500 font-bold text-center cursor-pointer uppercase">${c.name}</div>`; 
+            }); 
+            toggle('course-list'); 
+        }
+
         function selectCourse(i) { curC = i; document.getElementById('view-title').innerText = "SUBJECTS"; const list = document.getElementById('subject-list'); list.innerHTML = ''; mainData.courses[i].subjects.forEach((s, si) => { list.innerHTML += `<div onclick="showCategories(${si})" class="glass p-4 rounded-lg flex justify-between cursor-pointer uppercase font-semibold"><span>${s.name}</span><i class="fas fa-chevron-right text-yellow-500"></i></div>`; }); toggle('subject-section'); }
         function showCategories(si) { curS = si; document.getElementById('view-title').innerText = mainData.courses[curC].subjects[si].name; document.getElementById('category-list').innerHTML = `<div onclick="showItems('CHAPTERS')" class="glass p-5 rounded-xl border-l-4 border-blue-500 font-bold cursor-pointer">CHAPTERS</div><div onclick="showItems('WEEKLY TESTS')" class="glass p-5 rounded-xl border-l-4 border-green-500 font-bold cursor-pointer">WEEKLY TESTS</div>`; toggle('category-section'); }
         function showItems(type) { 
