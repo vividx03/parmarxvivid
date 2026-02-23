@@ -18,13 +18,15 @@
         #video-modal { background: rgba(0, 0, 0, 0.95); z-index: 9999; }
         .modal-content { width: 95%; max-width: 500px; }
         video { width: 100%; border-radius: 12px; }
+        /* Highlighted Wait Message */
+        #wait-msg { color: #facc15; font-weight: 600; text-shadow: 0 0 8px rgba(250, 204, 21, 0.3); border-bottom: 1px solid rgba(250, 204, 21, 0.2); padding-bottom: 8px; }
     </style>
 </head>
 <body class="p-4 pb-24">
     <div id="video-modal" class="fixed inset-0 hidden flex items-center justify-center p-4">
         <div class="modal-content glass-card p-6 relative">
             <button onclick="closeVideo()" class="absolute -top-12 right-0 text-white text-3xl">&times;</button>
-            <p id="wait-msg" class="text-blue-300 text-xs text-center mb-4 italic">Please wait, the lecture will start within 1 minute...</p>
+            <p id="wait-msg" class="text-sm text-center mb-4">⚠️ PLEASE WAIT... LECTURE WILL START WITHIN 1 MINUTE</p>
             <div id="video-player-container"></div>
             <div id="download-btn-container" class="mt-4"></div>
         </div>
@@ -129,10 +131,10 @@
                     <h4 class="font-bold mb-4 text-blue-100 text-sm leading-tight">${ch.title}</h4>
                     <div class="grid grid-cols-2 gap-3 text-[10px] font-bold">
                         ${isHTML ? `<button onclick="playVideo('${btoa(ch.url)}', '${ch.download_url || ""}')" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</button>` : (ch.url ? `<a href="${ch.url}" target="_blank" class="btn-gradient p-3 rounded-xl text-center shadow-lg"><i class="fas fa-play mr-1"></i> VIDEO</a>` : '')}
-                        ${ch.notes_en ? `<a href="${ch.notes_en}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">ENG NOTES</a>` : ''}
-                        ${ch.notes_hi ? `<a href="${ch.notes_hi}" target="_blank" class="bg-slate-700 p-3 rounded-xl text-center">HINDI NOTES</a>` : ''}
-                        ${ch.quiz ? `<a href="${ch.quiz}" target="_blank" class="bg-indigo-600 p-3 rounded-xl text-center uppercase">Attempt Quiz</a>` : ''}
-                        ${ch.handwritten ? `<a href="${ch.handwritten}" target="_blank" class="bg-teal-600 p-3 rounded-xl text-center">PPT/PDF</a>` : ''}
+                        ${ch.notes_en ? `<a href="${ch.notes_en}" target=\"_blank\" class=\"bg-slate-700 p-3 rounded-xl text-center\">ENG NOTES</a>` : ''}
+                        ${ch.notes_hi ? `<a href="${ch.notes_hi}" target=\"_blank\" class=\"bg-slate-700 p-3 rounded-xl text-center\">HINDI NOTES</a>` : ''}
+                        ${ch.quiz ? `<a href="${ch.quiz}" target=\"_blank\" class=\"bg-indigo-600 p-3 rounded-xl text-center uppercase\">Attempt Quiz</a>` : ''}
+                        ${ch.handwritten ? `<a href="${ch.handwritten}" target=\"_blank\" class=\"bg-teal-600 p-3 rounded-xl text-center\">PPT/PDF</a>` : ''}
                     </div>
                 </div>`; 
             }); 
@@ -143,6 +145,12 @@
             document.getElementById('video-player-container').innerHTML = atob(encodedHTML);
             const dContainer = document.getElementById('download-btn-container');
             dContainer.innerHTML = dLink ? `<a href="${dLink}" target="_blank" class="block w-full bg-green-600 p-3 rounded-xl text-center text-xs font-bold"><i class="fas fa-download mr-2"></i> DOWNLOAD LECTURE</a>` : '';
+            
+            // Show message and set timer to hide after 60s
+            const msg = document.getElementById('wait-msg');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 60000);
+
             document.getElementById('video-modal').classList.remove('hidden');
         }
 

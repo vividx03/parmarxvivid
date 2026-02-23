@@ -58,7 +58,6 @@ function addNewOrUpdate(db) {
 
     console.log("\n[LECTURE LINK / HTML CODE]");
     console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
-    
     let lines = [];
     while (true) {
         let line = readline.question('>');
@@ -68,7 +67,6 @@ function addNewOrUpdate(db) {
     let link = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
     if (!link && existing) link = existing.url;
 
-    // DOWNLOAD LINK LOGIC
     let dLink = existing ? existing.download_url : null;
     if (link && link.includes('<')) {
         dLink = readline.question('Lecture Download Link: ', {defaultInput: existing ? existing.download_url : ''});
@@ -88,10 +86,37 @@ function addNewOrUpdate(db) {
 function manageData(db) {
     let cIndex = readline.keyInSelect(db.courses.map(c => c.name), 'Select Course:');
     if (cIndex === -1) return;
-    if (readline.keyInYN('Delete "' + db.courses[cIndex].name + '"?')) {
+
+    if (readline.keyInYN('Delete FULL Course "' + db.courses[cIndex].name + '"?')) {
         db.courses.splice(cIndex, 1);
         saveDB(db);
-        console.log('🗑️ Deleted!');
+        console.log('🗑️ Course Deleted!');
+        return;
+    }
+
+    // Agar course delete nahi kiya, toh subject/chapter pe jao
+    let sIndex = readline.keyInSelect(db.courses[cIndex].subjects.map(s => s.name), 'Select Subject to manage:');
+    if (sIndex === -1) return;
+
+    let sub = db.courses[cIndex].subjects[sIndex];
+    if (readline.keyInYN('Delete this Subject "' + sub.name + '"?')) {
+        db.courses[cIndex].subjects.splice(sIndex, 1);
+        saveDB(db);
+        console.log('🗑️ Subject Deleted!');
+        return;
+    }
+
+    let catIndex = readline.keyInSelect(['CHAPTERS', 'WEEKLY TESTS'], 'Select Category:');
+    if (catIndex === -1) return;
+    let cat = catIndex === 0 ? 'CHAPTERS' : 'WEEKLY TESTS';
+
+    let itemIndex = readline.keyInSelect(sub[cat].map(i => i.title), 'Delete specific item?');
+    if (itemIndex !== -1) {
+        if (readline.keyInYN('Are you sure you want to delete this item?')) {
+            sub[cat].splice(itemIndex, 1);
+            saveDB(db);
+            console.log('🗑️ Item Deleted!');
+        }
     }
 }
 main();
