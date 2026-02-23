@@ -4,8 +4,16 @@
       "name": "PARMAR 4.0 GK",
       "teacher": "PARMAR SIR",
       "subjects": [
-        { "name": "BIOLOGY", "CHAPTERS": [], "WEEKLY TESTS": [] },
-        { "name": "ECONOMICS", "CHAPTERS": [], "WEEKLY TESTS": [] }
+        {
+          "name": "BIOLOGY",
+          "CHAPTERS": [],
+          "WEEKLY TESTS": []
+        },
+        {
+          "name": "ECONOMICS",
+          "CHAPTERS": [],
+          "WEEKLY TESTS": []
+        }
       ]
     },
     {
