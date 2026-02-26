@@ -21,7 +21,7 @@ function main() {
     else if (index === 3) deleteNotification(db);
 }
 
-// --- NOTIFICATION LOGIC (Fix for Title/Type Display) ---
+// --- NOTIFICATION LOGIC (Fixed for Tag) ---
 
 function addNotification(db) {
     console.log("\n--- ADD NEW NOTIFICATION ---");
@@ -37,18 +37,16 @@ function addNotification(db) {
 
     if (!db.notifications) db.notifications = [];
     
-    // Website ke frontend ke liye hum saari possible keys use kar rahe hain
+    // Website ke frontend (index.html) ke n.tag se match karne ke liye 'tag' key use ki hai
     db.notifications.push({
-        type: titleInput.toUpperCase(),      // Ye aksar blue label ke liye use hota hai
-        category: titleInput.toUpperCase(),  // Alternate key for label
-        title: titleInput.toUpperCase(),     // Standard title key
-        message: msg,                        // Aapka main content
-        date: new Date().toLocaleString()
+        tag: titleInput.toUpperCase(),       // Ye ab website pe label ban kar dikhega
+        message: msg,
+        date: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
     });
     
     saveDB(db);
     console.log('\n✅ Notification Added Successfully!');
-    console.log(`Label: ${titleInput.toUpperCase()}`);
+    console.log(`Label (Tag): ${titleInput.toUpperCase()}`);
     console.log(`Message: ${msg}`);
 }
 
@@ -58,7 +56,7 @@ function deleteNotification(db) {
         return;
     }
 
-    let notifList = db.notifications.map(n => `[${n.type || 'NOTIF'}] ${n.message}`);
+    let notifList = db.notifications.map(n => `[${n.tag || 'NOTIF'}] ${n.message.substring(0, 30)}...`);
     let index = readline.keyInSelect(notifList, 'Select Notification to Delete:');
     
     if (index !== -1) {
@@ -68,7 +66,7 @@ function deleteNotification(db) {
     }
 }
 
-// --- ORIGINAL CONTENT LOGIC (Unchanged) ---
+// --- ORIGINAL CONTENT LOGIC (Exactly Same) ---
 
 function addNewOrUpdate(db) {
     let courseNames = db.courses.map(c => c.name);
