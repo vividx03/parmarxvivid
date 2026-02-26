@@ -21,13 +21,13 @@ function main() {
     else if (index === 3) deleteNotification(db);
 }
 
-// --- NOTIFICATION LOGIC (Updated to show Title on Website) ---
+// --- NOTIFICATION LOGIC (Fix for Title/Type Display) ---
 
 function addNotification(db) {
     console.log("\n--- ADD NEW NOTIFICATION ---");
     
-    let title = readline.question('Enter Notification Title (e.g., IMP UPDATE, HOLIDAY): ');
-    if (!title) title = "UPDATE"; 
+    let titleInput = readline.question('Enter Notification Title (e.g., TESTING, ALERT): ');
+    if (!titleInput) titleInput = "UPDATE"; 
 
     let msg = readline.question('Enter Notification Message: ');
     if (!msg) {
@@ -37,18 +37,19 @@ function addNotification(db) {
 
     if (!db.notifications) db.notifications = [];
     
-    // Website pe Title dikhane ke liye hum Message ke andar hi Title daal rahe hain
-    let combinedMessage = `[${title.toUpperCase()}] ${msg}`;
-
+    // Website ke frontend ke liye hum saari possible keys use kar rahe hain
     db.notifications.push({
-        title: title.toUpperCase(),
-        message: combinedMessage, // Ab website pe Title + Message dono dikhega
+        type: titleInput.toUpperCase(),      // Ye aksar blue label ke liye use hota hai
+        category: titleInput.toUpperCase(),  // Alternate key for label
+        title: titleInput.toUpperCase(),     // Standard title key
+        message: msg,                        // Aapka main content
         date: new Date().toLocaleString()
     });
     
     saveDB(db);
     console.log('\n✅ Notification Added Successfully!');
-    console.log(`Preview: ${combinedMessage}`);
+    console.log(`Label: ${titleInput.toUpperCase()}`);
+    console.log(`Message: ${msg}`);
 }
 
 function deleteNotification(db) {
@@ -57,7 +58,7 @@ function deleteNotification(db) {
         return;
     }
 
-    let notifList = db.notifications.map(n => n.message);
+    let notifList = db.notifications.map(n => `[${n.type || 'NOTIF'}] ${n.message}`);
     let index = readline.keyInSelect(notifList, 'Select Notification to Delete:');
     
     if (index !== -1) {
