@@ -1,104 +1,146 @@
 const fs = require('fs');
 const readline = require('readline-sync');
 
-function loadDB() {
+// Database load karte waqt notifications check karna zaroori hai
+function loadDB() { 
     if (!fs.existsSync('db.json')) fs.writeFileSync('db.json', JSON.stringify({ courses: [], notifications: [] }));
-    let data = JSON.parse(fs.readFileSync('db.json', 'utf8'));
-    if (!data.notifications) data.notifications = [];
-    return data;
+    let db = JSON.parse(fs.readFileSync('db.json', 'utf8')); 
+    if (!db.notifications) db.notifications = [];
+    return db;
 }
 function saveDB(db) { fs.writeFileSync('db.json', JSON.stringify(db, null, 2)); }
 
 function main() {
     let db = loadDB();
-    console.log('\n--- VIVID ACADEMY DASHBOARD PANEL ---');
-    const mainOpts = ['ADD NOTIFICATION (📢)', 'ADD/UPDATE COURSE CONTENT', 'DELETE DATA/NOTIF', 'EXIT'];
-    const index = readline.keyInSelect(mainOpts, 'What do you want to do?');
-
-    if (index === 0) {
-        // NOTIFICATION LOGIC
-        let msg = readline.question('\nEnter Notification Message: ');
-        let tag = readline.question('Tag (NEW/UPDATE/ALERT): ').toUpperCase() || "UPDATE";
-        let date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-        db.notifications.push({ tag, message: msg, date });
-        saveDB(db);
-        console.log('✅ Notification Published!');
-    } else if (index === 1) {
-        addNewOrUpdate(db);
-    } else if (index === 2) {
-        manageData(db);
-    } else {
-        process.exit();
-    }
+    // AAPKA NAYA MENU
+    const options = ['Add/Update Content', 'Manage/Delete Content', '📢 Add Notification', '🗑️ Delete Notification', 'EXIT'];
+    const index = readline.keyInSelect(options, 'VIVID ACADEMY DASHBOARD');
+    
+    if (index === 0) addNewOrUpdate(db);
+    else if (index === 1) manageData(db);
+    else if (index === 2) addNotification(db); // Naya Function
+    else if (index === 3) deleteNotification(db); // Naya Function
+    else process.exit();
 }
 
-function addNewOrUpdate(db) {
-    let courseNames = [...db.courses.map(c => c.name), "ADD ANOTHER COURSE (+)"];
-    let choice = readline.keyInSelect(courseNames, 'Select Course:');
-    if (choice === -1) return;
+// --- NOTIFICATION ADD KARNE KA KAAM ---
+function addNotification(db) {
+    console.log('\n--- 📢 NEW NOTIFICATION ---');
+    let msg = readline.question('Enter Message: ');
+    let tag = readline.question('Tag (NEW/UPDATE/ALERT): ').toUpperCase() || "UPDATE";
+    let date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
 
-    if (choice === courseNames.length - 1) {
-        let name = readline.question('New Course Name: ').toUpperCase();
-        let teacher = readline.question('Teacher Name: ').toUpperCase();
-        db.courses.push({ name, teacher, subjects: [] });
-        saveDB(db);
-        console.log('✅ Course Added!');
-    } else {
-        let course = db.courses[choice];
-        let subNames = [...course.subjects.map(s => s.name), "ADD NEW SUBJECT (+)"];
-        let sIdx = readline.keyInSelect(subNames, 'Select Subject:');
-        if (sIdx === -1) return;
+    db.notifications.push({ tag, message: msg, date });
+    saveDB(db);
+    console.log('✅ Notification Published!');
+    main();
+}
 
-        if (sIdx === subNames.length - 1) {
-            let sName = readline.question('Subject Name: ').toUpperCase();
-            course.subjects.push({ name: sName, CHAPTERS: [], "WEEKLY TESTS": [] });
+// --- NOTIFICATION DELETE KARNE KA KAAM ---
+function deleteNotification(db) {
+    if (db.notifications.length === 0) {
+        console.log("❌ No notifications found.");
+        return main();
+    }
+    let list = db.notifications.map(n => `[${n.tag}] ${n.message.slice(0, 30)}...`);
+    let idx = readline.keyInSelect(list, 'Delete which notification?');
+    
+    if (idx !== -1) {
+        if (readline.keyInYN('Confirm Delete?')) {
+            db.notifications.splice(idx, 1);
             saveDB(db);
-        } else {
-            let sub = course.subjects[sIdx];
-            let cat = ['CHAPTERS', 'WEEKLY TESTS'][readline.keyInSelect(['CHAPTERS', 'WEEKLY TESTS'], 'Category:')];
-            if (!cat) return;
-            let items = [...sub[cat].map(i => i.title), "ADD NEW CONTENT (+)"];
-            let iIdx = readline.keyInSelect(items, 'Select Content:');
-            if (iIdx === -1) return;
-
-            let title, existing = null;
-            if (iIdx === items.length - 1) title = readline.question('Title: ');
-            else { existing = sub[cat][iIdx]; title = existing.title; }
-
-            console.log("\n[PASTE LINK/HTML - TYPE 'DONE']");
-            let lines = [];
-            while (true) {
-                let line = readline.question('>');
-                if (line.trim().toUpperCase() === 'DONE') break;
-                lines.push(line);
-            }
-            let link = lines.join(" ").trim();
-            if (!link && existing) link = existing.url;
-
-            let dLink = (link && link.includes('<')) ? readline.question('Download Link: ') : (existing ? existing.download_url : null);
-            let nEn = readline.question('Eng Notes: ', {defaultInput: existing ? existing.notes_en : ''});
-            let nHi = readline.question('Hindi Notes: ', {defaultInput: existing ? existing.notes_hi : ''});
-            let quiz = readline.question('Quiz: ', {defaultInput: existing ? existing.quiz : ''});
-            let ppt = readline.question('PPT/Other: ', {defaultInput: existing ? existing.handwritten : ''});
-
-            let newData = { title, url: link || null, download_url: dLink || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
-            if (existing) sub[cat][iIdx] = newData; else sub[cat].push(newData);
-            saveDB(db);
-            console.log('✅ Content Saved!');
+            console.log('🗑️ Deleted!');
         }
     }
     main();
 }
 
+function addNewOrUpdate(db) {
+    let courseNames = db.courses.map(c => c.name);
+    courseNames.push("ADD ANOTHER COURSE (+)");
+    let cIndex = readline.keyInSelect(courseNames, 'Select Course:');
+    if (cIndex === -1) return main();
+
+    if (cIndex === courseNames.length - 1) {
+        let newCourseName = readline.question('Enter New Course Name: ').toUpperCase();
+        let teacherName = readline.question('Enter Teacher Name: ').toUpperCase();
+        
+        const modeOptions = ['Regular Course', 'Direct Link'];
+        let modeIndex = readline.keyInSelect(modeOptions, 'Select Mode:');
+        
+        if (modeIndex === 1) {
+            let directLink = readline.question('Enter Redirect Link: ');
+            db.courses.push({ name: newCourseName, teacher: teacherName, directLink: directLink, subjects: [] });
+            saveDB(db);
+            console.log('✅ Redirect Course Added!');
+        } else {
+            db.courses.push({ name: newCourseName, teacher: teacherName, subjects: [] });
+            saveDB(db);
+            console.log('✅ Regular Course Added!');
+        }
+        return main();
+    }
+
+    let course = db.courses[cIndex];
+    let subjectNames = course.subjects.map(s => s.name);
+    subjectNames.push("ADD NEW SUBJECT (+)");
+    let sIndex = readline.keyInSelect(subjectNames, 'Select Subject:');
+    if (sIndex === -1) return main();
+
+    if (sIndex === subjectNames.length - 1) {
+        let newSubName = readline.question('Enter New Subject Name: ').toUpperCase();
+        course.subjects.push({ name: newSubName, CHAPTERS: [], "WEEKLY TESTS": [] });
+        saveDB(db);
+        return main();
+    }
+
+    let sub = course.subjects[sIndex];
+    const types = ['CHAPTERS', 'WEEKLY TESTS'];
+    let tIndex = readline.keyInSelect(types, 'Select Category:');
+    if (tIndex === -1) return main();
+    let cat = types[tIndex];
+
+    let list = sub[cat].map(item => item.title);
+    list.push("ADD NEW " + cat);
+    let itemIndex = readline.keyInSelect(list, 'Select Item:');
+    if (itemIndex === -1) return main();
+
+    let title, existing = null;
+    if (itemIndex === list.length - 1) title = readline.question('Enter Title: ');
+    else { existing = sub[cat][itemIndex]; title = existing.title; }
+
+    console.log("\n[LECTURE LINK / HTML CODE] - Type 'DONE' to finish");
+    let lines = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        lines.push(line);
+    }
+    let link = lines.join(" ").trim();
+    if (!link && existing) link = existing.url;
+
+    let dLink = (link && link.includes('<')) ? readline.question('Download Link: ') : (existing ? existing.download_url : null);
+    let nEn = readline.question('Eng Notes: ', {defaultInput: existing ? existing.notes_en : ''});
+    let nHi = readline.question('Hindi Notes: ', {defaultInput: existing ? existing.notes_hi : ''});
+    let quiz = readline.question('Quiz: ', {defaultInput: existing ? existing.quiz : ''});
+    let ppt = readline.question('PPT/Other: ', {defaultInput: existing ? existing.handwritten : ''});
+
+    let newData = { title, url: link || null, download_url: dLink || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
+    if (existing) sub[cat][itemIndex] = newData; else sub[cat].push(newData);
+    saveDB(db);
+    console.log('\n✅ Saved!');
+    main();
+}
+
 function manageData(db) {
-    const opts = ['Manage Courses', 'Manage Notifications'];
-    let idx = readline.keyInSelect(opts, 'Delete what?');
-    if (idx === 1) {
-        let nIdx = readline.keyInSelect(db.notifications.map(n => n.message.slice(0, 20)), 'Delete Notification?');
-        if (nIdx !== -1) { db.notifications.splice(nIdx, 1); saveDB(db); console.log('🗑️ Deleted!'); }
-    } else if (idx === 0) {
-        let cIdx = readline.keyInSelect(db.courses.map(c => c.name), 'Delete Course?');
-        if (cIdx !== -1) { db.courses.splice(cIdx, 1); saveDB(db); console.log('🗑️ Deleted!'); }
+    let list = db.courses.map(c => c.name);
+    let cIndex = readline.keyInSelect(list, 'Manage which course?');
+    if (cIndex === -1) return main();
+
+    if (readline.keyInYN('Delete FULL Course?')) {
+        db.courses.splice(cIndex, 1);
+        saveDB(db);
+        console.log('🗑️ Deleted!');
     }
     main();
 }
