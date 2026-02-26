@@ -1,60 +1,64 @@
 const fs = require('fs');
 const readline = require('readline-sync');
 
-function loadDB() { 
-    if (!fs.existsSync('db.json')) fs.writeFileSync('db.json', JSON.stringify({ courses: [], notifications: [] }));
-    let db = JSON.parse(fs.readFileSync('db.json', 'utf8')); 
-    if (!db.notifications) db.notifications = [];
-    return db;
-}
-
+function loadDB() { return JSON.parse(fs.readFileSync('db.json', 'utf8')); }
 function saveDB(db) { fs.writeFileSync('db.json', JSON.stringify(db, null, 2)); }
 
 function main() {
-    while (true) {
-        let db = loadDB();
-        console.log('\n--- VIVID ACADEMY DASHBOARD ---');
-        const options = ['Add/Update Content', 'Manage/Delete Data', '📢 Add Notification', '🗑️ Delete Notification'];
-        const index = readline.keyInSelect(options, 'What do you want to do?');
+    let db = loadDB();
+    // Updated Options as per your request
+    const options = [
+        'Add/Update Content', 
+        'Manage/Delete Data', 
+        'Add Notification', 
+        'Delete Notifications'
+    ];
+    
+    const index = readline.keyInSelect(options, 'What do you want to do?');
 
-        if (index === 0) addNewOrUpdate(db);
-        else if (index === 1) manageData(db);
-        else if (index === 2) addNotification(db);
-        else if (index === 3) deleteNotification(db);
-        else break; // EXIT on Cancel/0
-    }
+    if (index === 0) addNewOrUpdate(db);
+    else if (index === 1) manageData(db);
+    else if (index === 2) addNotification(db);
+    else if (index === 3) deleteNotification(db);
+    // index === -1 handles 'Cancel' (Option 5 in your list)
 }
 
-function addNotification(db) {
-    console.log('\n--- 📢 NEW NOTIFICATION ---');
-    let msg = readline.question('Enter Message: ');
-    let tag = readline.question('Tag (NEW/UPDATE/ALERT): ').toUpperCase() || "UPDATE";
-    let date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+// --- Naye Functions Notification ke liye ---
 
-    db.notifications.push({ tag, message: msg, date });
+function addNotification(db) {
+    console.log("\n--- ADD NOTIFICATION ---");
+    let msg = readline.question('Enter Notification Message: ');
+    if (!msg) return;
+
+    // Agar db mein notifications array nahi hai toh bana lo
+    if (!db.notifications) db.notifications = [];
+    
+    db.notifications.push({
+        message: msg,
+        date: new Date().toLocaleString()
+    });
+    
     saveDB(db);
-    console.log('✅ Notification Published!');
+    console.log('✅ Notification Added!');
 }
 
 function deleteNotification(db) {
-    if (db.notifications.length === 0) {
-        console.log("❌ No notifications to delete.");
+    if (!db.notifications || db.notifications.length === 0) {
+        console.log("❌ No notifications found.");
         return;
     }
-    let list = db.notifications.map(n => `[${n.tag}] ${n.message.slice(0, 30)}...`);
-    let nIdx = readline.keyInSelect(list, 'Select Notification to DELETE:');
+
+    let notifList = db.notifications.map(n => n.message);
+    let index = readline.keyInSelect(notifList, 'Select Notification to Delete:');
     
-    if (nIdx !== -1) {
-        // Aapka original Double Confirmation logic
-        if (readline.keyInYN('Delete this Notification? (Confirm 1/2)')) {
-            if (readline.keyInYN('WARNING: Final Confirmation. Confirm? (Confirm 2/2)')) {
-                db.notifications.splice(nIdx, 1);
-                saveDB(db);
-                console.log('🗑️ Notification Deleted!');
-            }
-        }
+    if (index !== -1) {
+        db.notifications.splice(index, 1);
+        saveDB(db);
+        console.log('🗑️ Notification Deleted!');
     }
 }
+
+// --- Aapka Purana Logic (Unchanged) ---
 
 function addNewOrUpdate(db) {
     let courseNames = db.courses.map(c => c.name);
@@ -143,7 +147,6 @@ function manageData(db) {
     let cIndex = readline.keyInSelect(db.courses.map(c => c.name), 'Select Course:');
     if (cIndex === -1) return;
 
-    // Aapka Original confirmation logic
     if (readline.keyInYN('Delete FULL Course "' + db.courses[cIndex].name + '"? (Confirm 1/2)')) {
         if (readline.keyInYN('WARNING: Final Confirmation. Confirm? (Confirm 2/2)')) {
             db.courses.splice(cIndex, 1);
@@ -185,3 +188,4 @@ function manageData(db) {
 }
 
 main();
+
