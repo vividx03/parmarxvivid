@@ -272,8 +272,8 @@
   ],
   "notifications": [
     {
-      "tag": "HELLO",
-      "message": "TESTING...",
+      "tag": "HELLO HELLO",
+      "message": "TESTING",
       "date": "26 Feb"
     }
   ]
