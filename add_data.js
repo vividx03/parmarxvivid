@@ -6,7 +6,6 @@ function saveDB(db) { fs.writeFileSync('db.json', JSON.stringify(db, null, 2)); 
 
 function main() {
     let db = loadDB();
-    // Updated Options as per your request
     const options = [
         'Add/Update Content', 
         'Manage/Delete Data', 
@@ -20,26 +19,34 @@ function main() {
     else if (index === 1) manageData(db);
     else if (index === 2) addNotification(db);
     else if (index === 3) deleteNotification(db);
-    // index === -1 handles 'Cancel' (Option 5 in your list)
 }
 
-// --- Naye Functions Notification ke liye ---
+// --- Updated Notification Functions ---
 
 function addNotification(db) {
-    console.log("\n--- ADD NOTIFICATION ---");
-    let msg = readline.question('Enter Notification Message: ');
-    if (!msg) return;
+    console.log("\n--- ADD NEW NOTIFICATION ---");
+    
+    // 1. Pehle Title puchenge
+    let title = readline.question('Enter Notification Title (e.g., IMPORTANT UPDATE, TESTING): ');
+    if (!title) title = "UPDATE"; // Default agar khali chhoda toh
 
-    // Agar db mein notifications array nahi hai toh bana lo
+    // 2. Fir Message puchenge
+    let msg = readline.question('Enter Notification Message: ');
+    if (!msg) {
+        console.log("❌ Message cannot be empty!");
+        return;
+    }
+
     if (!db.notifications) db.notifications = [];
     
     db.notifications.push({
+        title: title.toUpperCase(),
         message: msg,
         date: new Date().toLocaleString()
     });
     
     saveDB(db);
-    console.log('✅ Notification Added!');
+    console.log('✅ Notification Added Successfully!');
 }
 
 function deleteNotification(db) {
@@ -48,7 +55,8 @@ function deleteNotification(db) {
         return;
     }
 
-    let notifList = db.notifications.map(n => n.message);
+    // List dikhate waqt Title aur Message dono dikhenge
+    let notifList = db.notifications.map(n => `[${n.title}] ${n.message}`);
     let index = readline.keyInSelect(notifList, 'Select Notification to Delete:');
     
     if (index !== -1) {
@@ -58,7 +66,7 @@ function deleteNotification(db) {
     }
 }
 
-// --- Aapka Purana Logic (Unchanged) ---
+// --- Baki Code Same Hai ---
 
 function addNewOrUpdate(db) {
     let courseNames = db.courses.map(c => c.name);
