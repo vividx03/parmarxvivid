@@ -179,11 +179,6 @@
             <button onclick="renderCourses()" class="mt-8 p-4 glass-card w-full font-bold text-slate-400 text-sm tracking-widest uppercase">BACK TO COURSES</button>
         </div>
 
-        <div id="subject-section" class="hidden grid gap-4">
-            <div id="subject-list" class="grid gap-4"></div>
-            <button onclick="renderCourses()" class="mt-8 p-4 glass-card w-full font-bold text-slate-400 text-sm tracking-widest uppercase">BACK TO COURSES</button>
-        </div>
-
         <div id="category-section" class="hidden grid gap-4">
             <div id="category-list" class="grid gap-4"></div>
             <button onclick="toggle('subject-section')" class="mt-4 p-4 glass-card w-full font-bold text-slate-400 text-sm tracking-widest uppercase text-center">BACK</button>
@@ -206,13 +201,19 @@
 
     <script>
         let mainData = null, curC = null, curS = null;
+        let notifViewed = false; // Flag to track if notifications are seen
 
         function toggleInbox() {
             const modal = document.getElementById('inbox-modal');
+            const dot = document.getElementById('notif-dot');
+            
             modal.classList.toggle('hidden');
+            
             if(!modal.classList.contains('hidden')) {
                 renderNotifications();
-                document.getElementById('notif-dot').classList.add('hidden');
+                // Permanent hide for this session
+                dot.classList.add('hidden');
+                notifViewed = true; 
                 document.body.style.overflow = 'hidden'; 
             } else {
                 document.body.style.overflow = 'auto';
@@ -250,8 +251,8 @@
             .then(data => { 
                 mainData = data; 
                 renderCourses();
-                // Change: Show count instead of just a dot
-                if(data.notifications && data.notifications.length > 0) {
+                // Only show if not viewed yet
+                if(!notifViewed && data.notifications && data.notifications.length > 0) {
                     const dot = document.getElementById('notif-dot');
                     dot.innerText = data.notifications.length;
                     dot.classList.remove('hidden');
