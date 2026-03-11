@@ -21,7 +21,7 @@ function main() {
     else if (index === 3) deleteNotification(db);
 }
 
-// --- NOTIFICATION LOGIC ---
+// --- NOTIFICATION LOGIC (Fixed for Long Messages with DONE) ---
 
 function addNotification(db) {
     console.log("\n--- ADD NEW NOTIFICATION ---");
@@ -40,6 +40,7 @@ function addNotification(db) {
         lines.push(line);
     }
     
+    // Join lines with space and clean up
     let msg = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
 
     if (!msg) {
@@ -57,6 +58,8 @@ function addNotification(db) {
     
     saveDB(db);
     console.log('\n✅ Notification Added Successfully!');
+    console.log(`Label (Tag): ${titleInput.toUpperCase()}`);
+    console.log(`Message: ${msg}`);
 }
 
 function deleteNotification(db) {
@@ -75,7 +78,7 @@ function deleteNotification(db) {
     }
 }
 
-// --- CONTENT LOGIC ---
+// --- ORIGINAL CONTENT LOGIC (With PDF Multiline Fix) ---
 
 function addNewOrUpdate(db) {
     let courseNames = db.courses.map(c => c.name);
@@ -133,34 +136,39 @@ function addNewOrUpdate(db) {
     if (itemIndex === list.length - 1) title = readline.question('Enter Title: ');
     else { existing = sub[cat][itemIndex]; title = existing.title; }
 
-    // Helper function for Multiline Input (Like Lecture Link)
-    const getMultilineInput = (promptText, existingValue) => {
-        console.log(`\n[${promptText}]`);
-        console.log("Paste code/link, press ENTER. Type 'DONE' and press ENTER to finish.");
-        let lines = [];
-        while (true) {
-            let line = readline.question('>');
-            if (line.trim().toUpperCase() === 'DONE') break;
-            lines.push(line);
-        }
-        let result = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
-        return result || existingValue || null;
-    };
+    // Smart Multiline Function for Link/Code
+    function getSmartInput(label, existingVal) {
+        console.log(`\n[${label}]`);
+        console.log("Paste link/code. If it's code, type 'DONE' on new line to save.");
+        let firstLine = readline.question('>');
+        if (!firstLine && existingVal) return existingVal;
+        if (!firstLine) return null;
 
-    let link = getMultilineInput("LECTURE LINK / HTML CODE", existing ? existing.url : null);
+        if (firstLine.includes('<')) {
+            let lines = [firstLine];
+            while (true) {
+                let line = readline.question('>');
+                if (line.trim().toUpperCase() === 'DONE') break;
+                lines.push(line);
+            }
+            return lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+        }
+        return firstLine.trim();
+    }
+
+    let link = getSmartInput("LECTURE LINK / HTML CODE", existing ? existing.url : null);
 
     let dLink = existing ? existing.download_url : null;
     if (link && link.includes('<')) {
         dLink = readline.question('Lecture Download Link: ');
     }
 
-    // Now all PDF/Note fields use the same "DONE" logic
-    let nEn = getMultilineInput("ENGLISH NOTES LINK/CODE", existing ? existing.notes_en : null);
-    let nHi = getMultilineInput("HINDI NOTES LINK/CODE", existing ? existing.notes_hi : null);
+    let nEn = getSmartInput("Eng Notes", existing ? existing.notes_en : null);
+    let nHi = getSmartInput("Hindi Notes", existing ? existing.notes_hi : null);
     let quiz = readline.question('Quiz: ', {defaultInput: existing ? existing.quiz : ''});
-    let ppt = getMultilineInput("PPT/OTHER LINK/CODE", existing ? existing.handwritten : null);
+    let ppt = getSmartInput("PPT/Other", existing ? existing.handwritten : null);
 
-    let newData = { title, url: link, download_url: dLink, notes_en: nEn, notes_hi: nHi, quiz: quiz || null, handwritten: ppt };
+    let newData = { title, url: link || null, download_url: dLink || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
     if (existing) sub[cat][itemIndex] = newData; else sub[cat].push(newData);
     saveDB(db);
     console.log('\n✅ Saved Successfully!');
