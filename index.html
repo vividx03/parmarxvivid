@@ -56,7 +56,6 @@
             backdrop-filter: blur(8px); 
         }
 
-        /* Notification Full Page Styling */
         .full-page-notif {
             width: 100%;
             height: 100%;
@@ -86,7 +85,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Updated Counter Style */
         #notif-dot {
             min-width: 18px;
             height: 18px;
@@ -134,8 +132,7 @@
                 <h3 class="font-black text-white tracking-widest uppercase text-sm"><i class="fas fa-bell mr-2 text-blue-400"></i> Notifications</h3>
                 <button onclick="toggleInbox()" class="text-slate-400 text-3xl">&times;</button>
             </div>
-            <div id="inbox-list" class="p-4 space-y-4">
-                </div>
+            <div id="inbox-list" class="p-4 space-y-4"></div>
         </div>
     </div>
 
@@ -147,8 +144,8 @@
     <div id="video-modal" class="fixed inset-0 hidden modal-overlay flex items-center justify-center p-4">
         <div class="modal-content glass-card p-5 relative w-full max-w-2xl text-center shadow-2xl">
             <button onclick="closeVideo()" class="absolute -top-14 right-0 text-white text-4xl">&times;</button>
-            <p id="wait-msg" class="text-[10px] mb-4 uppercase tracking-widest bg-yellow-500/10 py-2 rounded-lg text-yellow-500 font-bold hidden">⚠️ Please wait... Lecture starts within 60s</p>
-            <div id="video-player-container" class="rounded-xl overflow-hidden bg-black min-h-[200px] flex items-center justify-center"></div>
+            <p id="wait-msg" class="text-[10px] mb-4 uppercase tracking-widest bg-yellow-500/10 py-2 rounded-lg text-yellow-500 font-bold">⚠️ Please wait... Lecture starts within 60s</p>
+            <div id="video-player-container" class="rounded-xl overflow-hidden bg-black"></div>
             <div id="download-btn-container" class="mt-4"></div>
         </div>
     </div>
@@ -201,7 +198,7 @@
 
     <script>
         let mainData = null, curC = null, curS = null;
-        let notifViewed = false; 
+        let notifViewed = false;
 
         function toggleInbox() {
             const modal = document.getElementById('inbox-modal');
@@ -212,7 +209,9 @@
                 dot.classList.add('hidden');
                 notifViewed = true; 
                 document.body.style.overflow = 'hidden'; 
-            } else { document.body.style.overflow = 'auto'; }
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
 
         function renderNotifications() {
@@ -220,17 +219,23 @@
             const msgs = mainData.notifications || [];
             list.innerHTML = msgs.length ? '' : '<p class="text-center text-slate-500 text-xs py-20">No new updates</p>';
             msgs.slice().reverse().forEach(n => {
-                list.innerHTML += `<div class="glass-card p-5 border-l-4 border-blue-500 bg-white/5"><div class="flex justify-between items-center mb-2"><span class="text-blue-400 text-[10px] font-black uppercase tracking-widest bg-blue-500/10 px-2 py-0.5 rounded">${n.tag || 'UPDATE'}</span><span class="text-slate-600 text-[9px] font-bold">${n.date || ''}</span></div><p class="text-[13px] text-slate-300 leading-relaxed font-medium">${n.message}</p></div>`;
+                list.innerHTML += `
+                    <div class="glass-card p-5 border-l-4 border-blue-500 bg-white/5">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-blue-400 text-[10px] font-black uppercase tracking-widest bg-blue-500/10 px-2 py-0.5 rounded">${n.tag || 'UPDATE'}</span>
+                            <span class="text-slate-600 text-[9px] font-bold">${n.date || ''}</span>
+                        </div>
+                        <p class="text-[13px] text-slate-300 leading-relaxed font-medium">${n.message}</p>
+                    </div>`;
             });
         }
 
         function closeNotice() { document.getElementById('notice-modal').style.display = 'none'; updateProgress(20); }
         function updateProgress(percent) { document.getElementById('progress-bar').style.width = percent + '%'; }
 
+        // No pop-up/loader for clean redirect
         function safeRedirect(url) {
-            const loader = document.getElementById('redirect-overlay');
-            loader.classList.remove('hidden');
-            setTimeout(() => { window.open(url, '_blank'); loader.classList.add('hidden'); }, 800);
+            window.open(url, '_blank');
         }
 
         function loadData() { 
@@ -254,7 +259,11 @@
             const list = document.getElementById('course-list'); list.innerHTML = ''; 
             mainData.courses.forEach((c, i) => { 
                 let action = c.directLink ? `safeRedirect('${c.directLink}')` : `selectCourse(${i})`;
-                list.innerHTML += `<div onclick="${action}" class="glass-card p-6 flex items-center cursor-pointer active:scale-95"><div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mr-5 border border-blue-500/20"><i class="fas fa-graduation-cap text-blue-500 text-xl"></i></div><div><div class="font-bold text-base text-white">${c.name}</div><div class="text-slate-500 text-[10px] font-black uppercase mt-1 tracking-widest">${c.teacher || 'Vivid Faculty'}</div></div><i class="fas fa-chevron-right ml-auto text-slate-700 text-sm"></i></div>`; 
+                list.innerHTML += `<div onclick="${action}" class="glass-card p-6 flex items-center cursor-pointer active:scale-95">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mr-5 border border-blue-500/20"><i class="fas fa-graduation-cap text-blue-500 text-xl"></i></div>
+                    <div><div class="font-bold text-base text-white">${c.name}</div><div class="text-slate-500 text-[10px] font-black uppercase mt-1 tracking-widest">${c.teacher || 'Vivid Faculty'}</div></div>
+                    <i class="fas fa-chevron-right ml-auto text-slate-700 text-sm"></i>
+                </div>`; 
             }); 
             toggle('course-list'); 
         }
@@ -284,7 +293,9 @@
         function showCategories(si) { 
             curS = si; updateProgress(75);
             document.getElementById('view-title').innerText = mainData.courses[curC].subjects[si].name;
-            document.getElementById('category-list').innerHTML = `<div onclick="showItems('CHAPTERS')" class="glass-card p-8 border-l-4 border-blue-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-book-open mr-5 text-blue-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">CHAPTERS CONTENT</span></div><div onclick="showItems('WEEKLY TESTS')" class="glass-card p-8 border-l-4 border-pink-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-vial mr-5 text-pink-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">MOCK TESTS</span></div>`; 
+            document.getElementById('category-list').innerHTML = `
+                <div onclick="showItems('CHAPTERS')" class="glass-card p-8 border-l-4 border-blue-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-book-open mr-5 text-blue-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">CHAPTERS CONTENT</span></div>
+                <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-8 border-l-4 border-pink-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-vial mr-5 text-pink-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">MOCK TESTS</span></div>`; 
             toggle('category-section'); 
         }
 
@@ -294,30 +305,29 @@
             document.getElementById('view-title').innerText = type;
             const list = document.getElementById('chapter-list'); list.innerHTML = ''; 
             items.forEach((ch, idx) => { 
+                let isVidHTML = ch.url && ch.url.includes('<');
+                let isPdfHTML = ch.handwritten && ch.handwritten.includes('<');
+
                 list.innerHTML += `<div class="glass-card p-6 mb-4 text-left">
                     <h4 class="font-bold mb-5 text-white text-sm uppercase border-b border-slate-800 pb-4 leading-relaxed tracking-wide">${ch.title}</h4>
                     <div class="grid grid-cols-2 gap-3 text-[10px] font-black uppercase text-white">
-                        ${generateVideoBtn(ch.url, ch.download_url)}
-                        ${ch.notes_en ? `<button onclick="safeRedirect('${ch.notes_en}')" class="btn-eng py-4 rounded-xl">ENG NOTES</button>` : ''}
-                        ${ch.notes_hi ? `<button onclick="safeRedirect('${ch.notes_hi}')" class="btn-hindi py-4 rounded-xl">HINDI NOTES</button>` : ''}
-                        ${ch.quiz ? `<button onclick="safeRedirect('${ch.quiz}')" class="btn-quiz py-4 rounded-xl">QUIZ</button>` : ''}
-                        ${ch.handwritten ? `<button onclick="safeRedirect('${ch.handwritten}')" class="btn-ppt py-4 rounded-xl">PPT/PDF</button>` : ''}
+                        ${isVidHTML ? `<button onclick="playVideo('${btoa(ch.url)}', '${ch.download_url || ""}')" class="btn-video py-4 rounded-xl">VIDEO</button>` : (ch.url ? `<button onclick="window.open('${ch.url}', '_blank')" class="btn-video py-4 rounded-xl">VIDEO</button>` : '')}
+                        ${ch.notes_en ? `<button onclick="window.open('${ch.notes_en}', '_blank')" class="btn-eng py-4 rounded-xl">ENG NOTES</button>` : ''}
+                        ${ch.notes_hi ? `<button onclick="window.open('${ch.notes_hi}', '_blank')" class="btn-hindi py-4 rounded-xl">HINDI NOTES</button>` : ''}
+                        ${ch.quiz ? `<button onclick="window.open('${ch.quiz}', '_blank')" class="btn-quiz py-4 rounded-xl">QUIZ</button>` : ''}
+                        ${isPdfHTML ? `<button onclick="playVideo('${btoa(ch.handwritten)}', '')" class="btn-ppt py-4 rounded-xl">PPT/PDF</button>` : (ch.handwritten ? `<button onclick="window.open('${ch.handwritten}', '_blank')" class="btn-ppt py-4 rounded-xl">PPT/PDF</button>` : '')}
                     </div>
                 </div>`; 
             }); 
             toggle('content-section'); 
         }
 
-        function generateVideoBtn(url, download = "") {
-            if(!url || url === "") return "";
-            let isHTML = url.includes('<');
-            let action = isHTML ? `playVideo('${btoa(url)}', '${download}')` : `safeRedirect('${url}')`;
-            return `<button onclick="${action}" class="btn-video py-4 rounded-xl">VIDEO</button>`;
-        }
-
         function playVideo(enc, d) {
             document.getElementById('video-player-container').innerHTML = atob(enc);
-            document.getElementById('download-btn-container').innerHTML = d ? `<button onclick="safeRedirect('${d}')" class="block w-full bg-emerald-600 py-4 rounded-xl text-xs font-bold uppercase text-white shadow-lg">DOWNLOAD LECTURE</button>` : '';
+            document.getElementById('download-btn-container').innerHTML = d ? `<button onclick="window.open('${d}', '_blank')" class="block w-full bg-emerald-600 py-4 rounded-xl text-xs font-bold uppercase text-white shadow-lg">DOWNLOAD LECTURE</button>` : '';
+            const waitMsg = document.getElementById('wait-msg');
+            waitMsg.classList.remove('hidden');
+            setTimeout(() => { waitMsg.classList.add('hidden'); }, 45000);
             document.getElementById('video-modal').classList.remove('hidden');
         }
 
