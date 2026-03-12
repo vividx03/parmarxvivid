@@ -327,10 +327,28 @@
               "title": "ATOM & ITS STRUCTURE - LEC 3",
               "url": "https://vividxatomz.edgeone.app/",
               "download_url": "https://hell-fs1-oot-c9eb9b92ba45.herokuapp.com/dl/69ad0b06522131182bea2e36",
-              "notes_en": null,
-              "notes_hi": null,
+              "notes_en": "https://vividxatomenglish.edgeone.app/",
+              "notes_hi": "https://vividxatomhindi.edgeone.app/",
               "quiz": "https://vividxatom.edgeone.app/",
               "handwritten": "https://vividxatomppt.edgeone.app/"
+            },
+            {
+              "title": "PERIODIC TABLE - LEC 4",
+              "url": "https://vividxperiodictablelecture.edgeone.app/",
+              "download_url": null,
+              "notes_en": "https://vividxperiodiceng.edgeone.app/",
+              "notes_hi": "https://vividxperiodichindi.edgeone.app/",
+              "quiz": "https://vividxperiodicquiz.edgeone.app/",
+              "handwritten": "https://vividxperiodicppt.edgeone.app/"
+            },
+            {
+              "title": "CHEMICAL REACTIONS - LEC 5",
+              "url": "https://vividxchemicalreactions.edgeone.app/",
+              "download_url": null,
+              "notes_en": "https://vividxchemicaleng.edgeone.app/",
+              "notes_hi": "https://vividxchemicalhindi.edgeone.app/",
+              "quiz": "https://vividxchemicalquiz.edgeone.app/",
+              "handwritten": "https://vividxchemicalppt.edgeone.app/"
             }
           ],
           "WEEKLY TESTS": []
