@@ -363,10 +363,19 @@
               "title": "ACID, BASE & SALTS - LEC 7",
               "url": "https://vividxacidbasesandsalts.edgeone.app/",
               "download_url": null,
-              "notes_en": null,
-              "notes_hi": null,
+              "notes_en": "https://vividxacidbaseandsaltseng.edgeone.app/",
+              "notes_hi": "https://vividxacidbaseandsaltshin.edgeone.app/",
               "quiz": "https://vividxacidbasesandsaltsquiz.edgeone.app/",
               "handwritten": "https://vividxacidbasesandsaltsppt.edgeone.app/"
+            },
+            {
+              "title": "CARBON AND ITS COMPOUNDS - LEC 8",
+              "url": "https://vividxcarbon.edgeone.app/",
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": "https://vividxcarbonppt.edgeone.app/"
             }
           ],
           "WEEKLY TESTS": []
@@ -423,9 +432,9 @@
       "date": "26 Feb 2026, 11:56 pm"
     },
     {
-      "tag": "UPDATE",
-      "message": "CHEMISTRY (PARMAR 4.0) UPDATED TILL NOW...",
-      "date": "14 Mar 2026, 10:21 am"
+      "tag": "UPDATE...",
+      "message": "CHEMISTRY PARMAR 4.0 UPDATED...",
+      "date": "16 Mar 2026, 2:39 pm"
     }
   ]
 }
