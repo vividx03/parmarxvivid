@@ -877,6 +877,273 @@
             }
           ],
           "WEEKLY TESTS": []
+        },
+        {
+          "name": "GEOGRAPHY",
+          "CHAPTERS": [
+            {
+              "title": "SOLAR SYSTEM - LEC 1",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fa7113a84022525e5a8f DONN",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fa9513a84022525e5a93",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fa9513a84022525e5a92",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fac813a84022525e5a9a",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fac813a84022525e5a99"
+            },
+            {
+              "title": "LATITUDE AND LONGITUDE - LEC 2",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fac813a84022525e5a97",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fac813a84022525e5a98",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fac813a84022525e5a9",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fac913a84022525e5a9b",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fad213a84022525e5aa2"
+            },
+            {
+              "title": "EARTH'S INTERIOR AND PLATE TECHTONICS - LEC 3",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fad213a84022525e5aa3",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fad213a84022525e5aa4",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fad213a84022525e5aa5",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fae813a84022525e5aaa",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fae813a84022525e5aac"
+            },
+            {
+              "title": "OCEAN AND CONTINENTS - LEC 4",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fae813a84022525e5aad",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fae813a84022525e5aae",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fae813a84022525e5aaf",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fae813a84022525e5aab",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fb0e13a84022525e5ab6"
+            },
+            {
+              "title": "ROCKS AND VOLCANO - LEC 5",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fc3f13a84022525e5acc",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fc4713a84022525e5ace",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fc5113a84022525e5ad0",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fc5913a84022525e5ad2",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fc6213a84022525e5ad4"
+            },
+            {
+              "title": "GEOMORPHIC PROCESSES - LEC 6",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fc7313a84022525e5ad6",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f3e213a84022525e5977",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f3ed13a84022525e5979",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fcb513a84022525e5ada",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fcbf13a84022525e5adc"
+            },
+            {
+              "title": "LANDFORMS - LEC 7",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fcca13a84022525e5ade",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fcd213a84022525e5ae0",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fcda13a84022525e5ae2",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fce513a84022525e5ae4",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fcf113a84022525e5ae6"
+            },
+            {
+              "title": "ATMOSPHERE - LEC 8",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fcf913a84022525e5ae8",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd0313a84022525e5aea",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd0f13a84022525e5aec",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd1813a84022525e5aee",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd2013a84022525e5af0"
+            },
+            {
+              "title": "CONDENSATION AND PRECIPITATION - LEC 9",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fd2913a84022525e5af2",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd3113a84022525e5af4",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd3913a84022525e5af6",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd4313a84022525e5af8",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd4a13a84022525e5afa"
+            },
+            {
+              "title": "WIND - LEC 10",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fd5213a84022525e5afc",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd5d13a84022525e5afe",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd6513a84022525e5b00",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd7213a84022525e5b02",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd7a13a84022525e5b04"
+            },
+            {
+              "title": "CYCLONE AND OCEAN CURRENTS - LEC 11",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fd8213a84022525e5b06",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd8a13a84022525e5b08",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd9713a84022525e5b0a",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fd9e13a84022525e5b0c",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fda713a84022525e5b0e"
+            },
+            {
+              "title": "INDIA AND IT'S LOCATION - LEC 12",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fdb213a84022525e5b10",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdb913a84022525e5b12",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdc513a84022525e5b14",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdce13a84022525e5b16",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdd813a84022525e5b18"
+            },
+            {
+              "title": "HIMALAYAS - LEC 13",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fde713a84022525e5b1a",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdef13a84022525e5b1c",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdf713a84022525e5b1e",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fdff13a84022525e5b20",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe0713a84022525e5b22"
+            },
+            {
+              "title": "PENINSULAR PLATEAU - LEC 14",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fe0f13a84022525e5b24",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe1713a84022525e5b26",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe1f13a84022525e5b28",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe2713a84022525e5b2a",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe2f13a84022525e5b2c"
+            },
+            {
+              "title": "PLAINS AND ISLANDS - LEC 15",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fe3913a84022525e5b2e DO BE",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe4113a84022525e5b30",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe4b13a84022525e5b32",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe5313a84022525e5b34",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe5b13a84022525e5b36"
+            },
+            {
+              "title": "HIMALAYAN RIVER SYSTEM - LEC 16",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fe6413a84022525e5b38",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe6c13a84022525e5b3a",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe7413a84022525e5b3c",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe7c13a84022525e5b3e",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe8313a84022525e5b40"
+            },
+            {
+              "title": "RIVER SYSTEM MCQs",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fe8c13a84022525e5b42",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fe9413a84022525e5b44",
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "PENINSULAR RIVERS - LEC 17",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fe9c13a84022525e5b46",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fea413a84022525e5b48",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8feae13a84022525e5b4a",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8feb513a84022525e5b4c",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8febe13a84022525e5b4e"
+            },
+            {
+              "title": "DAMS , LAKES AND WATERFALLS - LEC 18",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8fec713a84022525e5b50",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f5c113a84022525e59f4",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f5c713a84022525e59f6",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fef813a84022525e5b54",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f5d413a84022525e59fa"
+            },
+            {
+              "title": "MONSOON - LEC 19",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ff1613a84022525e5b57",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff1f13a84022525e5b59",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff2713a84022525e5b5b",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff2f13a84022525e5b5d",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff3913a84022525e5b5f"
+            },
+            {
+              "title": "MONSOON MCQs",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ff4013a84022525e5b61",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff4913a84022525e5b63",
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": null
+            },
+            {
+              "title": "FORESTS AND GRASSLANDS - LEC 20",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ff5013a84022525e5b65",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff5d13a84022525e5b67",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff6513a84022525e5b69",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff6e13a84022525e5b6b",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff7613a84022525e5b6d"
+            },
+            {
+              "title": "SOIL - LEC 21",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ff7f13a84022525e5b6f",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff8713a84022525e5b71",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff8f13a84022525e5b73",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ff9b13a84022525e5b75",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffa613a84022525e5b77"
+            },
+            {
+              "title": "AGRICULTURE - LEC 22",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ffaf13a84022525e5b79",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffb713a84022525e5b7b",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffbf13a84022525e5b7d",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffc813a84022525e5b7f",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffd213a84022525e5b81"
+            },
+            {
+              "title": "MINERALS - LEC 23",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b8ffda13a84022525e5b83",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffe213a84022525e5b85",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8ffec13a84022525e5b87",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8fff913a84022525e5b89",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9000213a84022525e5b8b"
+            },
+            {
+              "title": "TRANSPORT - LEC 24",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b9000a13a84022525e5b8d",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9001213a84022525e5b8f",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9001c13a84022525e5b91",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9002813a84022525e5b93",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9003313a84022525e5b95"
+            },
+            {
+              "title": "WORLD MAP PART 1 - LEC 25",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b9003b13a84022525e5b97",
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": null,
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9004413a84022525e5b99"
+            },
+            {
+              "title": "WORLD MAP PART 2 - LEC 26",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b9004c13a84022525e5b9b DONE.",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b8f6bd13a84022525e5a42",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9010913a84022525e5ba8",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9011013a84022525e5baa",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9011913a84022525e5bac"
+            },
+            {
+              "title": "HUMAN GEOGRAPHY - LEC 27",
+              "url": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?watch=69b9012113a84022525e5bae",
+              "download_url": null,
+              "notes_en": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9012a13a84022525e5bb0",
+              "notes_hi": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9013513a84022525e5bb2",
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9014213a84022525e5bb4",
+              "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9014b13a84022525e5bb6"
+            }
+          ],
+          "WEEKLY TESTS": []
         }
       ]
     },
@@ -931,8 +1198,8 @@
     },
     {
       "tag": "UPDATE...",
-      "message": "CHEMISTRY PARMAR 4.0 UPDATED...",
-      "date": "16 Mar 2026, 2:39 pm"
+      "message": "All subjects on the Parmar 4.0 website have now been fully updated. 📚 Make the most of it—study consistently and aim for your selection. 🎯 If you find any video or PDF link not working, please report it to me on Instagram. 🔧 IG: @ellorvii",
+      "date": "18 Mar 2026, 1:27 am"
     }
   ]
 }
