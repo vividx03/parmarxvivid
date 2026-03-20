@@ -74,7 +74,7 @@ function deleteNotification(db) {
     if (index !== -1) {
         db.notifications.splice(index, 1);
         saveDB(db);
-        console.log('ðŸ—‘ï¸ Notification Deleted!');
+        console.log('ðŸ--'ï¸ Notification Deleted!');
     }
 }
 
@@ -136,31 +136,70 @@ function addNewOrUpdate(db) {
     if (itemIndex === list.length - 1) title = readline.question('Enter Title: ');
     else { existing = sub[cat][itemIndex]; title = existing.title; }
 
-    // --- HELPER FOR MULTILINE DONE LOGIC ---
-    function getLinkOrCode(promptLabel, existingVal) {
-        console.log(`\n[${promptLabel}]`);
-        console.log("Paste link/code, press ENTER, type 'DONE' and press ENTER.");
-        let lines = [];
-        while (true) {
-            let line = readline.question('>');
-            if (line.trim().toUpperCase() === 'DONE') break;
-            lines.push(line);
-        }
-        let input = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
-        return input || existingVal;
+    // --- LECTURE ---
+    console.log("\n[LECTURE LINK / HTML CODE]");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
+    let lines = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        lines.push(line);
     }
-
-    let link = getLinkOrCode("LECTURE LINK / HTML CODE", existing ? existing.url : null);
+    let link = lines.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+    if (!link && existing) link = existing.url;
 
     let dLink = existing ? existing.download_url : null;
     if (link && link.includes('<')) {
         dLink = readline.question('Lecture Download Link: ');
     }
 
-    let nEn = getLinkOrCode("Eng Notes Link/Code", existing ? existing.notes_en : null);
-    let nHi = getLinkOrCode("Hindi Notes Link/Code", existing ? existing.notes_hi : null);
-    let quiz = getLinkOrCode("Quiz Link/Code", existing ? existing.quiz : null);
-    let ppt = getLinkOrCode("PPT/PDF Link/Code", existing ? existing.handwritten : null);
+    // --- ENG NOTES ---
+    console.log("\n[ENG NOTES LINK / HTML CODE]");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
+    let linesEn = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        linesEn.push(line);
+    }
+    let nEn = linesEn.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+    if (!nEn && existing) nEn = existing.notes_en;
+
+    // --- HINDI NOTES ---
+    console.log("\n[HINDI NOTES LINK / HTML CODE]");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
+    let linesHi = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        linesHi.push(line);
+    }
+    let nHi = linesHi.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+    if (!nHi && existing) nHi = existing.notes_hi;
+
+    // --- QUIZ ---
+    console.log("\n[QUIZ LINK / HTML CODE]");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
+    let linesQuiz = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        linesQuiz.push(line);
+    }
+    let quiz = linesQuiz.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+    if (!quiz && existing) quiz = existing.quiz;
+
+    // --- PPT ---
+    console.log("\n[PPT/OTHER LINK / HTML CODE]");
+    console.log("Paste code, press ENTER, type 'DONE' and press ENTER.");
+    let linesPpt = [];
+    while (true) {
+        let line = readline.question('>');
+        if (line.trim().toUpperCase() === 'DONE') break;
+        linesPpt.push(line);
+    }
+    let ppt = linesPpt.join(" ").replace(/(\r\n|\n|\r)/gm, " ").trim();
+    if (!ppt && existing) ppt = existing.handwritten;
 
     let newData = { title, url: link || null, download_url: dLink || null, notes_en: nEn || null, notes_hi: nHi || null, quiz: quiz || null, handwritten: ppt || null };
     if (existing) sub[cat][itemIndex] = newData; else sub[cat].push(newData);
@@ -176,7 +215,7 @@ function manageData(db) {
         if (readline.keyInYN('WARNING: Final Confirmation. Confirm? (Confirm 2/2)')) {
             db.courses.splice(cIndex, 1);
             saveDB(db);
-            console.log('ðŸ—‘ï¸ Course Deleted!');
+            console.log('ðŸ--'ï¸ Course Deleted!');
             return;
         }
     }
@@ -191,7 +230,7 @@ function manageData(db) {
         if (readline.keyInYN('Confirm Deletion? (Confirm 2/2)')) {
             db.courses[cIndex].subjects.splice(sIndex, 1);
             saveDB(db);
-            console.log('ðŸ—‘ï¸ Subject Deleted!');
+            console.log('ðŸ--'ï¸ Subject Deleted!');
             return;
         }
     }
@@ -206,10 +245,11 @@ function manageData(db) {
             if (readline.keyInYN('Final Confirm 2/2?')) {
                 sub[cat].splice(itemIndex, 1);
                 saveDB(db);
-                console.log('ðŸ—‘ï¸ Item Deleted!');
+                console.log('ðŸ--'ï¸ Item Deleted!');
             }
         }
     }
 }
 
 main();
+
