@@ -1,9 +1,8 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "https://p-pause.vercel.app",
-      "permanent": false
+      "destination": "/maintenance.html"
     }
   ]
 }
