@@ -405,7 +405,17 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69bf935828e78901690fd2dd"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "CHEMISTRY FULL TEST",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://vividxchemistrytest.edgeone.app/",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "PHYSICS",
@@ -483,7 +493,17 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d08a03ce62c2c595f91f"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "PHYSICS FULL TEST",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://vividxphysicstest.edgeone.app/",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "POLITY",
