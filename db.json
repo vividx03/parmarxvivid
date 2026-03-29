@@ -680,7 +680,17 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b910a613a84022525e5f2c"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "POLITY TEST 1",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4cc03ce62c2c595f92f",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "ANCIENT HISTORY",
@@ -794,7 +804,26 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9046313a84022525e5c58"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "HISTORY TEST 1",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4aa03ce62c2c595f923",
+              "handwritten": null
+            },
+            {
+              "title": "HISTORY TEST 2",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4af03ce62c2c595f925",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "MEDIEVAL HISTORY",
@@ -890,7 +919,26 @@
               "handwritten": null
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "HISTORY TEST 3",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4b503ce62c2c595f927",
+              "handwritten": null
+            },
+            {
+              "title": "HISTORY TEST 4",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4bb03ce62c2c595f929",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "MODERN HISTORY",
@@ -977,7 +1025,26 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9080b13a84022525e5d29"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "HISTORY TEST 5",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4c103ce62c2c595f92b",
+              "handwritten": null
+            },
+            {
+              "title": "FULL HISTORY TEST",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://vividxfullhistorytest.edgeone.app/",
+              "handwritten": null
+            }
+          ]
         },
         {
           "name": "GEOGRAPHY",
@@ -1244,7 +1311,71 @@
               "handwritten": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69b9014b13a84022525e5bb6"
             }
           ],
-          "WEEKLY TESTS": []
+          "WEEKLY TESTS": [
+            {
+              "title": "GEOGRAPHY TEST 1",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4f003ce62c2c595f937",
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY TEST 2",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4f603ce62c2c595f939",
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY TEST 3",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d4fb03ce62c2c595f93b",
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY TEST 4",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d50103ce62c2c595f93d",
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY TEST 5",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d51203ce62c2c595f93f",
+              "handwritten": null
+            },
+            {
+              "title": "GEOGRAPHY TEST 6",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://publicbotshub.blogspot.com/p/file-stream-bot.html?dl=69c8d51d03ce62c2c595f941",
+              "handwritten": null
+            },
+            {
+              "title": "FULL GEOGRAPHY TEST",
+              "url": null,
+              "download_url": null,
+              "notes_en": null,
+              "notes_hi": null,
+              "quiz": "https://vividxfullgeotest.edgeone.app/",
+              "handwritten": null
+            }
+          ]
         }
       ]
     },
