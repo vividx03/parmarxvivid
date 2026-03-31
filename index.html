@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BhumiharxVivid | Elite Dashboard</title>
+    <title>Vivid Academy | Elite Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -44,55 +44,11 @@
             transition: all 0.3s ease;
         }
 
-        /* --- STYLISH BhumiharxVivid ENHANCEMENTS --- */
-        /* BhumiharxVivid header glow and animation */
-        .brand-text-glow {
-            text-shadow: 0 0 12px #3b82f6, 0 0 25px #a855f7;
-            animation: brandPulse 2s ease-in-out infinite;
-        }
-        @keyframes brandPulse {
-            0% { text-shadow: 0 0 8px #3b82f6, 0 0 16px #a855f7; opacity: 1; }
-            50% { text-shadow: 0 0 20px #3b82f6, 0 0 35px #c084fc; opacity: 0.95; }
-            100% { text-shadow: 0 0 8px #3b82f6, 0 0 16px #a855f7; opacity: 1; }
-        }
-        /* BhumiharxVivid badge or any element with brand text gets extra flair */
-        .brand-highlight {
-            background: linear-gradient(135deg, #2563eb20, #a855f720);
-            border-left: 3px solid #3b82f6;
-            box-shadow: 0 0 15px rgba(59,130,246,0.2);
-        }
-        /* Stylish buttons */
-        .btn-video { background: linear-gradient(135deg, #2563eb, #1d4ed8); transition: transform 0.2s, box-shadow 0.2s; }
-        .btn-video:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px #2563eb; }
-        .btn-eng { background: linear-gradient(135deg, #6366f1, #4f46e5); transition: transform 0.2s; }
-        .btn-eng:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px #4f46e5; }
-        .btn-hindi { background: linear-gradient(135deg, #8b5cf6, #7c3aed); transition: transform 0.2s; }
-        .btn-hindi:hover { transform: translateY(-2px); }
-        .btn-quiz { background: linear-gradient(135deg, #ec4899, #db2777); transition: transform 0.2s; }
-        .btn-quiz:hover { transform: translateY(-2px); }
-        .btn-ppt { background: linear-gradient(135deg, #06b6d4, #0891b2); transition: transform 0.2s; }
-        .btn-ppt:hover { transform: translateY(-2px); }
-
-        /* Vivid cards: glow effect on hover */
-        .vivid-card-hover {
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .vivid-card-hover:hover {
-            transform: scale(1.01);
-            border-color: #3b82f6;
-            box-shadow: 0 0 20px rgba(59,130,246,0.4);
-            background: rgba(15, 23, 42, 0.85);
-        }
-        /* notification bell */
-        .notif-btn {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-            animation: ring 2s infinite ease-in-out;
-        }
-        @keyframes ring {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        .btn-video { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .btn-eng { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .btn-hindi { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .btn-quiz { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .btn-ppt { background: linear-gradient(135deg, #06b6d4, #0891b2); }
 
         .modal-overlay { 
             background: rgba(2, 6, 23, 0.98); 
@@ -119,6 +75,16 @@
 
         .hidden { display: none; }
 
+        .notif-btn {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            animation: ring 2s infinite ease-in-out;
+        }
+        @keyframes ring {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         #notif-dot {
             min-width: 18px;
             height: 18px;
@@ -131,15 +97,6 @@
             top: 6px;
             right: 6px;
             border: 2px solid #020617;
-        }
-        /* stylish section title */
-        .stylish-section-title {
-            background: linear-gradient(90deg, #3b82f6, #c084fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 0.15em;
-            font-weight: 900;
         }
     </style>
 </head>
@@ -154,9 +111,9 @@
             </div>
             <h2 class="text-xl font-black mb-3 text-white uppercase tracking-tight">📢 Important Notice</h2>
             <div class="text-[13px] text-gray-300 space-y-3 leading-relaxed mb-6 text-left border-l-2 border-blue-500/30 pl-3">
-                <p>All courses and materials on this website are provided <b>completely free of cost</b> by <span class="text-blue-400 font-bold px-1 bg-blue-500/10 rounded">BhumiharxVivid</span>.</p>
+                <p>All courses and materials on this website are provided <b>completely free of cost</b> by <span class="text-blue-400 font-bold px-1 bg-blue-500/10 rounded">VIVID</span>.</p>
                 <p>We do not charge any fees. If anyone asks you for money claiming to represent us, <span class="text-red-400 font-bold uppercase">please do not pay</span>.</p>
-                <p>Ask for a refund immediately and report the matter to us. This is the only official platform managed by <span class="text-blue-400 font-bold">BhumiharxVivid</span>.</p>
+                <p>Ask for a refund immediately and report the matter to us. This is the only official platform managed by <span class="text-blue-400 font-bold">VIVID</span>.</p>
             </div>
             <div class="flex flex-col gap-2">
                 <a href="https://whatsapp.com/channel/0029VbBjUBM0wajzBk92iw2q" target="_blank" class="btn-video py-3 rounded-xl font-bold text-xs tracking-widest uppercase text-white">
@@ -195,8 +152,7 @@
 
     <div class="max-w-md mx-auto">
         <header class="text-center py-12">
-            <!-- BhumiharxVivid branding with stylish glow animation -->
-            <h1 class="text-4xl font-black tracking-tighter text-white">BHUMIHAR<span class="text-blue-500 brand-text-glow">xVIVID</span></h1>
+            <h1 class="text-4xl font-black tracking-tighter text-white">VIVID <span class="text-blue-500">ACADEMY</span></h1>
             <p class="text-slate-400 text-xs font-bold uppercase tracking-[0.4em] mt-2">Excellence in Learning</p>
         </header>
 
@@ -315,9 +271,9 @@
             const list = document.getElementById('course-list'); list.innerHTML = ''; 
             mainData.courses.forEach((c, i) => { 
                 let action = c.directLink ? `handleOpen('${c.directLink}')` : `selectCourse(${i})`;
-                list.innerHTML += `<div onclick="${action}" class="glass-card p-6 flex items-center cursor-pointer active:scale-95 vivid-card-hover">
+                list.innerHTML += `<div onclick="${action}" class="glass-card p-6 flex items-center cursor-pointer active:scale-95">
                     <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mr-5 border border-blue-500/20"><i class="fas fa-graduation-cap text-blue-500 text-xl"></i></div>
-                    <div><div class="font-bold text-base text-white">${c.name}</div><div class="text-slate-500 text-[10px] font-black uppercase mt-1 tracking-widest">${c.teacher || 'BhumiharxVivid Faculty'}</div></div>
+                    <div><div class="font-bold text-base text-white">${c.name}</div><div class="text-slate-500 text-[10px] font-black uppercase mt-1 tracking-widest">${c.teacher || 'Vivid Faculty'}</div></div>
                     <i class="fas fa-chevron-right ml-auto text-slate-700 text-sm"></i>
                 </div>`; 
             }); 
@@ -341,7 +297,7 @@
             document.getElementById('view-title').innerText = mainData.courses[i].name;
             const list = document.getElementById('subject-list'); list.innerHTML = ''; 
             mainData.courses[i].subjects.forEach((s, si) => { 
-                list.innerHTML += `<div onclick="showCategories(${si})" class="glass-card p-6 flex justify-between items-center cursor-pointer active:scale-95 vivid-card-hover"><span class="font-bold text-sm uppercase text-slate-200">${s.name}</span><i class="fas fa-arrow-right text-blue-500"></i></div>`; 
+                list.innerHTML += `<div onclick="showCategories(${si})" class="glass-card p-6 flex justify-between items-center cursor-pointer active:scale-95"><span class="font-bold text-sm uppercase text-slate-200">${s.name}</span><i class="fas fa-arrow-right text-blue-500"></i></div>`; 
             }); 
             toggle('subject-section'); 
         }
@@ -350,8 +306,8 @@
             curS = si; updateProgress(75);
             document.getElementById('view-title').innerText = mainData.courses[curC].subjects[si].name;
             document.getElementById('category-list').innerHTML = `
-                <div onclick="showItems('CHAPTERS')" class="glass-card p-8 border-l-4 border-blue-600 cursor-pointer flex items-center active:scale-95 vivid-card-hover"><i class="fas fa-book-open mr-5 text-blue-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">CHAPTERS CONTENT</span></div>
-                <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-8 border-l-4 border-pink-600 cursor-pointer flex items-center active:scale-95 vivid-card-hover"><i class="fas fa-vial mr-5 text-pink-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">MOCK TESTS</span></div>`; 
+                <div onclick="showItems('CHAPTERS')" class="glass-card p-8 border-l-4 border-blue-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-book-open mr-5 text-blue-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">CHAPTERS CONTENT</span></div>
+                <div onclick="showItems('WEEKLY TESTS')" class="glass-card p-8 border-l-4 border-pink-600 cursor-pointer flex items-center active:scale-95"><i class="fas fa-vial mr-5 text-pink-500 text-xl"></i> <span class="font-black text-sm uppercase text-white tracking-widest">MOCK TESTS</span></div>`; 
             toggle('category-section'); 
         }
 
@@ -361,14 +317,14 @@
             document.getElementById('view-title').innerText = type;
             const list = document.getElementById('chapter-list'); list.innerHTML = ''; 
             items.forEach((ch, idx) => { 
-                list.innerHTML += `<div class="glass-card p-6 mb-4 text-left vivid-card-hover">
+                list.innerHTML += `<div class="glass-card p-6 mb-4 text-left">
                     <h4 class="font-bold mb-5 text-white text-sm uppercase border-b border-slate-800 pb-4 leading-relaxed tracking-wide">${ch.title}</h4>
                     <div class="grid grid-cols-2 gap-3 text-[10px] font-black uppercase text-white">
-                        ${ch.url ? `<button onclick="handleOpen(atob('${btoa(ch.url)}'))" class="btn-video py-4 rounded-xl transition-all duration-200">VIDEO</button>` : ''}
-                        ${ch.notes_en ? `<button onclick="handleOpen(atob('${btoa(ch.notes_en)}'))" class="btn-eng py-4 rounded-xl transition-all duration-200">ENG NOTES</button>` : ''}
-                        ${ch.notes_hi ? `<button onclick="handleOpen(atob('${btoa(ch.notes_hi)}'))" class="btn-hindi py-4 rounded-xl transition-all duration-200">HINDI NOTES</button>` : ''}
-                        ${ch.quiz ? `<button onclick="handleOpen(atob('${btoa(ch.quiz)}'))" class="btn-quiz py-4 rounded-xl transition-all duration-200">QUIZ</button>` : ''}
-                        ${ch.handwritten ? `<button onclick="handleOpen(atob('${btoa(ch.handwritten)}'))" class="btn-ppt py-4 rounded-xl transition-all duration-200">PPT/PDF</button>` : ''}
+                        ${ch.url ? `<button onclick="handleOpen(atob('${btoa(ch.url)}'))" class="btn-video py-4 rounded-xl">VIDEO</button>` : ''}
+                        ${ch.notes_en ? `<button onclick="handleOpen(atob('${btoa(ch.notes_en)}'))" class="btn-eng py-4 rounded-xl">ENG NOTES</button>` : ''}
+                        ${ch.notes_hi ? `<button onclick="handleOpen(atob('${btoa(ch.notes_hi)}'))" class="btn-hindi py-4 rounded-xl">HINDI NOTES</button>` : ''}
+                        ${ch.quiz ? `<button onclick="handleOpen(atob('${btoa(ch.quiz)}'))" class="btn-quiz py-4 rounded-xl">QUIZ</button>` : ''}
+                        ${ch.handwritten ? `<button onclick="handleOpen(atob('${btoa(ch.handwritten)}'))" class="btn-ppt py-4 rounded-xl">PPT/PDF</button>` : ''}
                     </div>
                 </div>`; 
             }); 
