@@ -160,6 +160,27 @@
             margin: auto;
         }
         /* Cross button removed - no support-close class styles now */
+        
+        /* Header button styles */
+        .header-btn {
+            background: rgba(255,255,255,0.08);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .header-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+        }
     </style>
 </head>
 <body class="p-4 pb-28">
@@ -223,7 +244,10 @@
                             <span class="support-online-dot"></span>
                             <span class="text-[11px] font-bold">💬 Support: <span id="displayUser" class="text-blue-400"></span></span>
                         </div>
-                        <button onclick="supportExitOnly()" class="text-[10px] text-slate-500 hover:text-white px-3 py-1 rounded-full bg-white/5">Exit</button>
+                        <div class="flex gap-2">
+                            <button onclick="supportLogout()" class="header-btn logout-btn text-[10px] text-red-400 hover:text-white px-3 py-1 rounded-full">Logout</button>
+                            <button onclick="supportExitOnly()" class="header-btn text-[10px] text-slate-400 hover:text-white px-3 py-1 rounded-full">Exit</button>
+                        </div>
                     </div>
                     
                     <div id="live-chat-box" class="flex-1 overflow-y-auto p-4 flex flex-col bg-black/20" style="min-height: 0;">
@@ -513,7 +537,10 @@
             if(username && name) {
                 localStorage.setItem(SESSION_USER_KEY, JSON.stringify({ username, name }));
             }
-            // NEVER clear session on exit - session persists forever
+        }
+        
+        function clearCurrentSession() {
+            localStorage.removeItem(SESSION_USER_KEY);
         }
         
         function loadCurrentSession() {
@@ -686,7 +713,7 @@
             saveCurrentSession(username, name);
         }
         
-        // NEW: Exit only closes modal, does NOT logout - keeps session alive
+        // Exit only closes modal, does NOT logout - keeps session alive
         function supportExitOnly() {
             closeSupportChat();
             // Session remains saved, polling stops but will restart when reopened
@@ -694,6 +721,23 @@
                 clearInterval(pollingInterval);
                 pollingInterval = null;
             }
+        }
+        
+        // Logout - clears session and shows login screen
+        function supportLogout() {
+            stopPolling();
+            currentUser = null;
+            clearCurrentSession(); // Clear saved session
+            document.getElementById('support-auth').classList.remove('hidden');
+            document.getElementById('live-support-ui').classList.add('hidden');
+            document.getElementById('suppName').value = "";
+            document.getElementById('suppUser').value = "";
+            document.getElementById('liveChatInput').value = "";
+            const box = document.getElementById("live-chat-box");
+            if(box) box.innerHTML = "";
+            lastUpdateId = 0;
+            messageSendLock = false;
+            // Don't close the modal, just show login screen
         }
         
         // Auto-login on page load if session exists - persists forever
@@ -718,6 +762,7 @@
         window.supportLoginOrStartChat = supportLoginOrStartChat;
         window.supportSendLiveQuery = supportSendLiveQuery;
         window.supportExitOnly = supportExitOnly;
+        window.supportLogout = supportLogout;
         
         loadData();
         autoLoginSupport();
