@@ -703,7 +703,7 @@
             closeSupportChat();
         }
         
-        // Auto-login on page load if session exists
+        // Auto-login on page load if session exists - FIXED: Now auto-restores chat on every page load
         function autoLoginSupport() {
             const session = loadCurrentSession();
             if(session && session.username && session.name) {
@@ -716,6 +716,9 @@
                     renderMessages();
                     startPolling();
                     lastUpdateId = 0;
+                } else {
+                    // User data missing but session exists - clear invalid session
+                    saveCurrentSession(null, null);
                 }
             }
         }
