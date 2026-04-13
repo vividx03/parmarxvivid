@@ -223,7 +223,7 @@
                             <span class="support-online-dot"></span>
                             <span class="text-[11px] font-bold">💬 Support: <span id="displayUser" class="text-blue-400"></span></span>
                         </div>
-                        <button onclick="supportLogoutAndReset()" class="text-[10px] text-slate-500 hover:text-white px-3 py-1 rounded-full bg-white/5">Exit</button>
+                        <button onclick="supportExitOnly()" class="text-[10px] text-slate-500 hover:text-white px-3 py-1 rounded-full bg-white/5">Exit</button>
                     </div>
                     
                     <div id="live-chat-box" class="flex-1 overflow-y-auto p-4 flex flex-col bg-black/20" style="min-height: 0;">
@@ -512,9 +512,8 @@
         function saveCurrentSession(username, name) {
             if(username && name) {
                 localStorage.setItem(SESSION_USER_KEY, JSON.stringify({ username, name }));
-            } else {
-                localStorage.removeItem(SESSION_USER_KEY);
             }
+            // NEVER clear session on exit - session persists forever
         }
         
         function loadCurrentSession() {
@@ -683,27 +682,21 @@
                 startPolling();
                 lastUpdateId = 0;
             }
-            // Save session for auto-login on page reload
+            // Save session for auto-login on page reload (persists forever)
             saveCurrentSession(username, name);
         }
         
-        function supportLogoutAndReset() {
-            stopPolling();
-            currentUser = null;
-            saveCurrentSession(null, null); // Clear session
-            document.getElementById('support-auth').classList.remove('hidden');
-            document.getElementById('live-support-ui').classList.add('hidden');
-            document.getElementById('suppName').value = "";
-            document.getElementById('suppUser').value = "";
-            document.getElementById('liveChatInput').value = "";
-            const box = document.getElementById("live-chat-box");
-            if(box) box.innerHTML = "";
-            lastUpdateId = 0;
-            messageSendLock = false;
+        // NEW: Exit only closes modal, does NOT logout - keeps session alive
+        function supportExitOnly() {
             closeSupportChat();
+            // Session remains saved, polling stops but will restart when reopened
+            if(pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
         }
         
-        // Auto-login on page load if session exists - FIXED: Now auto-restores chat on every page load
+        // Auto-login on page load if session exists - persists forever
         function autoLoginSupport() {
             const session = loadCurrentSession();
             if(session && session.username && session.name) {
@@ -716,9 +709,6 @@
                     renderMessages();
                     startPolling();
                     lastUpdateId = 0;
-                } else {
-                    // User data missing but session exists - clear invalid session
-                    saveCurrentSession(null, null);
                 }
             }
         }
@@ -727,7 +717,7 @@
         
         window.supportLoginOrStartChat = supportLoginOrStartChat;
         window.supportSendLiveQuery = supportSendLiveQuery;
-        window.supportLogoutAndReset = supportLogoutAndReset;
+        window.supportExitOnly = supportExitOnly;
         
         loadData();
         autoLoginSupport();
