@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Support Chat Styles (exactly same as original support code) -->
+    <!-- Support Chat Styles -->
     <style>
         :root {
             --bg-dark: #020617;
@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* Progress Bar */
         #progress-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 5px;
@@ -39,9 +38,9 @@
         }
 
         .glass-card { 
-            background: var(--glass-bg); 
+            background: rgba(15, 23, 42, 0.7); 
             backdrop-filter: blur(16px); 
-            border: 1px solid var(--glass-border); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
             border-radius: 20px; 
             transition: all 0.3s ease;
         }
@@ -80,6 +79,7 @@
         .notif-btn {
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
             animation: ring 2s infinite ease-in-out;
+            position: relative;
         }
         @keyframes ring {
             0% { transform: scale(1); }
@@ -87,7 +87,7 @@
             100% { transform: scale(1); }
         }
 
-        #notif-dot {
+        #notif-dot, #support-notif-dot {
             min-width: 18px;
             height: 18px;
             padding: 0 4px;
@@ -96,12 +96,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            top: 6px;
-            right: 6px;
+            top: -5px;
+            right: -5px;
             border: 2px solid #020617;
+            position: absolute;
+            border-radius: 50%;
         }
 
-        /* Support Chat Modal - EXACT SAME STYLES from original support code */
+        /* Support Chat Styles */
         .support-chat-msg { max-width: 85%; border-radius: 22px; font-size: 13px; line-height: 1.45; margin-bottom: 12px; padding: 12px; word-wrap: break-word; }
         .support-msg-vivid { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59,130,246,0.3); border-bottom-left-radius: 5px; color: #b9e0ff; }
         .support-msg-user { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.12); border-bottom-right-radius: 5px; margin-left: auto; color: #fff; }
@@ -139,7 +141,6 @@
             .support-file-attach-btn, .support-send-btn { width: 44px; height: 44px; }
         }
         
-        /* Support Modal Container */
         .support-modal-container {
             position: fixed;
             top: 0;
@@ -159,9 +160,7 @@
             width: 100%;
             margin: auto;
         }
-        /* Cross button removed - no support-close class styles now */
         
-        /* Header button styles */
         .header-btn {
             background: rgba(255,255,255,0.08);
             padding: 6px 12px;
@@ -180,6 +179,10 @@
         }
         .logout-btn:hover {
             background: rgba(239, 68, 68, 0.4);
+        }
+        
+        .support-btn-relative {
+            position: relative;
         }
     </style>
 </head>
@@ -221,10 +224,9 @@
         </div>
     </div>
 
-    <!-- Support Chat Modal - EXACT SAME HTML STRUCTURE as original support code (cross button removed) -->
+    <!-- Support Chat Modal -->
     <div id="support-chat-modal" class="support-modal-container hidden">
         <div class="relative w-full max-w-md">
-            <!-- LOGIN SECTION (Name + Username only, NO password) - EXACT COPY -->
             <div id="support-auth" class="glass-card p-8 w-full">
                 <div class="text-center mb-6">
                     <h1 class="text-3xl font-black text-white">LIVE <span class="text-blue-500">SUPPORT</span></h1>
@@ -236,7 +238,6 @@
                 <p class="text-[9px] text-slate-500 mt-4 text-center">Username must contain letters & numbers (min 7 chars). Same username = load previous chats automatically.</p>
             </div>
 
-            <!-- MAIN CHAT UI (Mobile Friendly: Image left, Send right) - EXACT COPY -->
             <div id="live-support-ui" class="hidden w-full">
                 <div class="glass-card overflow-hidden flex flex-col" style="height: 70vh; max-height: 600px;">
                     <div class="p-4 bg-blue-600/10 border-b border-white/10 flex justify-between items-center shrink-0">
@@ -250,19 +251,14 @@
                         </div>
                     </div>
                     
-                    <div id="live-chat-box" class="flex-1 overflow-y-auto p-4 flex flex-col bg-black/20" style="min-height: 0;">
-                        <!-- dynamic messages will appear here -->
-                    </div>
+                    <div id="live-chat-box" class="flex-1 overflow-y-auto p-4 flex flex-col bg-black/20" style="min-height: 0;"></div>
 
-                    <!-- Input Area: Image button on LEFT, Input field in middle, Send button on RIGHT -->
                     <div class="support-chat-input-area p-3 flex gap-2 items-center shrink-0 border-t border-white/10">
                         <div class="support-file-attach-btn" onclick="document.getElementById('imageUploadInput').click()">
                             <i class="fas fa-image text-blue-400 text-xl"></i>
                         </div>
                         <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
-                        
                         <input type="text" id="liveChatInput" placeholder="Type your message..." class="bg-white/5 border border-white/10 rounded-3xl px-4 py-3 text-sm text-white flex-1 outline-none focus:border-blue-500 min-w-0">
-                        
                         <div class="support-send-btn" onclick="supportSendLiveQuery()">
                             <i class="fas fa-paper-plane text-white text-lg"></i>
                         </div>
@@ -325,13 +321,16 @@
             <button onclick="toggle('category-section')" class="mt-6 p-4 glass-card w-full font-bold text-slate-400 text-sm tracking-widest uppercase mb-10 text-center">BACK</button>
         </div>
 
-        <!-- Footer with Support button instead of YouTube -->
+        <!-- Footer with Support button -->
         <footer class="fixed bottom-0 left-0 w-full p-6 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-900">
             <div class="flex justify-around max-w-md mx-auto">
                 <a href="https://whatsapp.com/channel/0029VbBjUBM0wajzBk92iw2q" target="_blank" class="text-green-500 text-3xl"><i class="fab fa-whatsapp"></i></a>
                 <a href="https://t.me/vividx_03" target="_blank" class="text-blue-400 text-3xl"><i class="fab fa-telegram-plane"></i></a>
                 <a href="https://www.instagram.com/ellorvii" target="_blank" class="text-pink-500 text-3xl"><i class="fab fa-instagram"></i></a>
-                <a href="#" onclick="openSupportChat(); return false;" class="text-blue-400 text-3xl"><i class="fas fa-headset"></i></a>
+                <div class="support-btn-relative">
+                    <a href="#" onclick="openSupportChat(); return false;" class="text-blue-400 text-3xl"><i class="fas fa-headset"></i></a>
+                    <span id="support-notif-dot" class="hidden absolute bg-red-500 text-white rounded-full" style="top: -8px; right: -12px; min-width: 18px; height: 18px; font-size: 10px;">0</span>
+                </div>
             </div>
         </footer>
     </div>
@@ -341,7 +340,6 @@
         let mainData = null, curC = null, curS = null;
         let notifViewed = false;
         
-        // Load notification viewed status from localStorage
         const NOTIF_VIEWED_KEY = "vivid_notifications_viewed";
         
         function markNotificationsViewed() {
@@ -409,7 +407,6 @@
             .then(data => { 
                 mainData = data; 
                 renderCourses();
-                // Check if notifications were already viewed (persistent)
                 if(!wasNotificationsViewed() && data.notifications && data.notifications.length > 0) {
                     const dot = document.getElementById('notif-dot');
                     dot.innerText = data.notifications.length;
@@ -506,10 +503,17 @@
             window.scrollTo({top: 0, behavior: 'smooth'}); 
         }
 
-        // Support Chat Functions - OPEN MODAL
+        // Support Chat Functions
         function openSupportChat() {
             document.getElementById('support-chat-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            // Clear unread count when opening chat
+            clearSupportUnreadCount();
+            // Scroll to bottom after a short delay
+            setTimeout(() => {
+                const box = document.getElementById('live-chat-box');
+                if(box) box.scrollTop = box.scrollHeight;
+            }, 100);
         }
         
         function closeSupportChat() {
@@ -517,22 +521,51 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ==================== EXACT SUPPORT CHAT CODE (copied verbatim from original) ====================
+        // ==================== SUPPORT CHAT CODE ====================
         const BOT_TOKEN = "8670403460:AAGyJQnVT62Sg0bhqGm0vUTE6id66PF1t5I";
         const ADMIN_CHAT_ID = "8305282917";
         const STORAGE_USERS = "vivid_support_users_v2";
         const SESSION_USER_KEY = "vivid_current_session_user";
+        const UNREAD_KEY = "vivid_support_unread_count";
         let currentUser = null;
         let lastUpdateId = 0;
         let pollingInterval = null;
         let messageSendLock = false;
+        let lastMessageCount = 0;
         
         function loadUsersDB() { const raw = localStorage.getItem(STORAGE_USERS); if(!raw) return {}; try { return JSON.parse(raw); } catch(e) { return {}; } }
         function saveUsersDB(db) { localStorage.setItem(STORAGE_USERS, JSON.stringify(db)); }
         function isValidUsername(u) { return u.length >= 7 && /[A-Za-z]/.test(u) && /[0-9]/.test(u); }
         function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, function(m) { if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m; }); }
         
-        // Save current session to localStorage for auto-login on page reload
+        // Unread count functions
+        function getSupportUnreadCount() {
+            const count = localStorage.getItem(UNREAD_KEY);
+            return count ? parseInt(count) : 0;
+        }
+        
+        function updateSupportUnreadCount(count) {
+            localStorage.setItem(UNREAD_KEY, count);
+            const dot = document.getElementById('support-notif-dot');
+            if(dot) {
+                if(count > 0) {
+                    dot.innerText = count > 99 ? '99+' : count;
+                    dot.classList.remove('hidden');
+                } else {
+                    dot.classList.add('hidden');
+                }
+            }
+        }
+        
+        function incrementSupportUnreadCount() {
+            const current = getSupportUnreadCount();
+            updateSupportUnreadCount(current + 1);
+        }
+        
+        function clearSupportUnreadCount() {
+            updateSupportUnreadCount(0);
+        }
+        
         function saveCurrentSession(username, name) {
             if(username && name) {
                 localStorage.setItem(SESSION_USER_KEY, JSON.stringify({ username, name }));
@@ -560,6 +593,9 @@
             if(!userData || !userData.messages) return;
             const box = document.getElementById("live-chat-box");
             if(!box) return;
+            const oldScrollHeight = box.scrollHeight;
+            const wasScrolledToBottom = box.scrollHeight - box.scrollTop <= box.clientHeight + 50;
+            
             box.innerHTML = "";
             const messages = userData.messages;
             for(let msgObj of messages) {
@@ -580,7 +616,12 @@
                     box.appendChild(div);
                 }
             }
-            box.scrollTop = box.scrollHeight;
+            
+            // Auto-scroll to bottom if already at bottom
+            if(wasScrolledToBottom || messages.length > lastMessageCount) {
+                box.scrollTop = box.scrollHeight;
+            }
+            lastMessageCount = messages.length;
         }
         
         function addLocalMessage(username, messageObj) {
@@ -589,7 +630,9 @@
             if(!db[username].messages) db[username].messages = [];
             db[username].messages.push(messageObj);
             saveUsersDB(db);
-            if(currentUser && currentUser.username === username) renderMessages();
+            if(currentUser && currentUser.username === username) {
+                renderMessages();
+            }
         }
         
         async function sendImageToTelegram(file, captionText = "") {
@@ -654,11 +697,13 @@
         async function pollTelegramUpdates() {
             if(!currentUser) return;
             try {
-                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId}&timeout=8`);
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId}`);
                 const data = await res.json();
                 if(data.ok && data.result && data.result.length > 0) {
                     for(const update of data.result) {
-                        if(update.update_id >= lastUpdateId) lastUpdateId = update.update_id + 1;
+                        if(update.update_id >= lastUpdateId) {
+                            lastUpdateId = update.update_id + 1;
+                        }
                         const message = update.message;
                         if(!message || !message.text) continue;
                         const text = message.text;
@@ -670,6 +715,11 @@
                             const lastMsg = userMsgs[userMsgs.length-1];
                             if(lastMsg && lastMsg.sender === "admin" && lastMsg.content === reply && (Date.now() - (lastMsg.timestamp || 0)) < 5000) continue;
                             addLocalMessage(currentUser.username, { type: "text", content: reply, sender: "admin", timestamp: Date.now() });
+                            // Increment unread count only if chat modal is not open
+                            const modal = document.getElementById('support-chat-modal');
+                            if(!modal || modal.classList.contains('hidden')) {
+                                incrementSupportUnreadCount();
+                            }
                         }
                     }
                 }
@@ -709,25 +759,27 @@
                 startPolling();
                 lastUpdateId = 0;
             }
-            // Save session for auto-login on page reload (persists forever)
             saveCurrentSession(username, name);
+            clearSupportUnreadCount();
+            setTimeout(() => {
+                const box = document.getElementById('live-chat-box');
+                if(box) box.scrollTop = box.scrollHeight;
+            }, 100);
         }
         
-        // Exit only closes modal, does NOT logout - keeps session alive
         function supportExitOnly() {
             closeSupportChat();
-            // Session remains saved, polling stops but will restart when reopened
             if(pollingInterval) {
                 clearInterval(pollingInterval);
                 pollingInterval = null;
             }
         }
         
-        // Logout - clears session and shows login screen
         function supportLogout() {
             stopPolling();
             currentUser = null;
-            clearCurrentSession(); // Clear saved session
+            clearCurrentSession();
+            clearSupportUnreadCount();
             document.getElementById('support-auth').classList.remove('hidden');
             document.getElementById('live-support-ui').classList.add('hidden');
             document.getElementById('suppName').value = "";
@@ -737,10 +789,8 @@
             if(box) box.innerHTML = "";
             lastUpdateId = 0;
             messageSendLock = false;
-            // Don't close the modal, just show login screen
         }
         
-        // Auto-login on page load if session exists - persists forever
         function autoLoginSupport() {
             const session = loadCurrentSession();
             if(session && session.username && session.name) {
@@ -753,6 +803,20 @@
                     renderMessages();
                     startPolling();
                     lastUpdateId = 0;
+                    // Scroll to bottom after loading
+                    setTimeout(() => {
+                        const box = document.getElementById('live-chat-box');
+                        if(box) box.scrollTop = box.scrollHeight;
+                    }, 100);
+                }
+            }
+            // Restore unread count display
+            const unread = getSupportUnreadCount();
+            if(unread > 0) {
+                const dot = document.getElementById('support-notif-dot');
+                if(dot) {
+                    dot.innerText = unread > 99 ? '99+' : unread;
+                    dot.classList.remove('hidden');
                 }
             }
         }
