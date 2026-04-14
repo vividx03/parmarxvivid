@@ -102,10 +102,63 @@
             border-radius: 50%;
         }
 
-        .support-chat-msg { max-width: 85%; border-radius: 22px; font-size: 13px; line-height: 1.45; margin-bottom: 12px; padding: 12px; word-wrap: break-word; }
+        .support-chat-msg { 
+            max-width: 85%; 
+            border-radius: 22px; 
+            font-size: 13px; 
+            line-height: 1.45; 
+            margin-bottom: 12px; 
+            padding: 12px; 
+            word-wrap: break-word;
+            position: relative;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .support-chat-msg:active {
+            transform: scale(0.98);
+        }
         .support-msg-vivid { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59,130,246,0.3); border-bottom-left-radius: 5px; color: #b9e0ff; }
         .support-msg-user { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.12); border-bottom-right-radius: 5px; margin-left: auto; color: #fff; }
         .support-msg-admin { background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.15)); border: 1px solid rgba(34,197,94,0.4); border-bottom-left-radius: 5px; color: #c6ffd9; }
+        
+        /* Reaction Popup */
+        .reaction-popup {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            gap: 12px;
+            z-index: 10002;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: popupFadeIn 0.2s ease;
+        }
+        .reaction-popup span {
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 4px;
+        }
+        .reaction-popup span:hover {
+            transform: scale(1.3);
+        }
+        @keyframes popupFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .message-reaction {
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 6px;
+            padding: 2px 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
         .support-auth-input {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -128,7 +181,6 @@
         .support-auth-btn:hover { opacity: 0.9; transform: scale(0.98); }
         .support-online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; animation: support-pulse 1.5s infinite; }
         @keyframes support-pulse { 0% { opacity: 0.4; } 100% { opacity: 1; } }
-        .support-msg-img { max-width: 160px; border-radius: 14px; margin-top: 6px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; }
         .support-file-attach-btn { background: rgba(255,255,255,0.08); border-radius: 40px; padding: 12px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; }
         .support-file-attach-btn:hover { background: rgba(59,130,246,0.3); }
         .support-send-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 40px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
@@ -531,6 +583,62 @@
         let lastMessageCount = 0;
         let sendCooldown = false;
         
+        // Reaction System
+        let currentReactionMsgId = null;
+        let reactionTimeout = null;
+        
+        const reactions = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
+        
+        function showReactionPopup(x, y, messageId) {
+            hideReactionPopup();
+            currentReactionMsgId = messageId;
+            
+            const popup = document.createElement('div');
+            popup.className = 'reaction-popup';
+            popup.style.left = x + 'px';
+            popup.style.top = (y - 50) + 'px';
+            
+            reactions.forEach(emoji => {
+                const span = document.createElement('span');
+                span.textContent = emoji;
+                span.onclick = (e) => {
+                    e.stopPropagation();
+                    addReactionToMessage(currentReactionMsgId, emoji);
+                    hideReactionPopup();
+                };
+                popup.appendChild(span);
+            });
+            
+            document.body.appendChild(popup);
+            
+            reactionTimeout = setTimeout(() => {
+                hideReactionPopup();
+            }, 3000);
+        }
+        
+        function hideReactionPopup() {
+            const popup = document.querySelector('.reaction-popup');
+            if(popup) popup.remove();
+            if(reactionTimeout) clearTimeout(reactionTimeout);
+            currentReactionMsgId = null;
+        }
+        
+        function addReactionToMessage(messageId, emoji) {
+            const db = loadUsersDB();
+            if(!db[currentUser.username]) return;
+            if(!db[currentUser.username].reactions) db[currentUser.username].reactions = {};
+            if(!db[currentUser.username].reactions[messageId]) db[currentUser.username].reactions[messageId] = [];
+            
+            const existingIndex = db[currentUser.username].reactions[messageId].indexOf(emoji);
+            if(existingIndex > -1) {
+                db[currentUser.username].reactions[messageId].splice(existingIndex, 1);
+            } else {
+                db[currentUser.username].reactions[messageId].push(emoji);
+            }
+            saveUsersDB(db);
+            renderMessages();
+        }
+        
         function loadUsersDB() { const raw = localStorage.getItem(STORAGE_USERS); if(!raw) return {}; try { return JSON.parse(raw); } catch(e) { return {}; } }
         function saveUsersDB(db) { localStorage.setItem(STORAGE_USERS, JSON.stringify(db)); }
         function isValidUsername(u) { return u.length >= 7 && /[A-Za-z]/.test(u) && /[0-9]/.test(u); }
@@ -545,18 +653,12 @@
             }); 
         }
         
-        // Convert URLs to clickable links
         function linkifyText(text) {
             if(!text) return '';
             const urlRegex = /(https?:\/\/[^\s]+)/g;
             return text.replace(urlRegex, function(url) {
                 return `<a href="${url}" target="_blank" class="message-link" rel="noopener noreferrer" onclick="event.stopPropagation()">${escapeHtml(url)}</a>`;
             });
-        }
-        
-        // Open image in new tab without showing bot token
-        function openImage(imageUrl) {
-            window.open(imageUrl, '_blank');
         }
         
         function getSupportUnreadCount() {
@@ -617,24 +719,59 @@
             
             box.innerHTML = "";
             const messages = userData.messages;
-            for(let msgObj of messages) {
+            const reactions = userData.reactions || {};
+            
+            for(let i = 0; i < messages.length; i++) {
+                const msgObj = messages[i];
                 const { type, content, sender, timestamp, imageUrl } = msgObj;
+                const msgId = `msg_${i}_${timestamp}`;
+                const msgReactions = reactions[msgId] || [];
+                
+                const div = document.createElement("div");
+                div.className = `support-chat-msg ${sender === "user" ? "support-msg-user" : (sender === "admin" ? "support-msg-admin" : "support-msg-vivid")}`;
+                div.setAttribute('data-msg-id', msgId);
+                
+                const timeSpan = timestamp ? `<div class="text-[8px] opacity-50 mb-1">${new Date(timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>` : "";
+                const senderLabel = sender === "user" ? "You" : (sender === "admin" ? "✨ Vivid Admin" : "System");
+                
+                let contentHtml = "";
                 if(type === "image") {
-                    const div = document.createElement("div");
-                    div.className = `support-chat-msg ${sender === "user" ? "support-msg-user" : (sender === "admin" ? "support-msg-admin" : "support-msg-vivid")}`;
-                    const timeSpan = timestamp ? `<div class="text-[8px] opacity-50 mb-1">${new Date(timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>` : "";
-                    const senderLabel = sender === "user" ? "You" : (sender === "admin" ? "✨ Vivid Admin" : "System");
-                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div><img src="${imageUrl}" class="support-msg-img" alt="shared image" onclick="openImage('${imageUrl}')" onerror="this.src='https://placehold.co/300x200?text=Image+Failed'"><div class="text-[10px] mt-1 break-all">${escapeHtml(content || "📷 Image")}</div>`;
-                    box.appendChild(div);
+                    contentHtml = `<div class="text-[11px]">📷 Image shared</div>`;
                 } else {
-                    const div = document.createElement("div");
-                    div.className = `support-chat-msg ${sender === "user" ? "support-msg-user" : (sender === "admin" ? "support-msg-admin" : "support-msg-vivid")}`;
-                    const timeSpan = timestamp ? `<div class="text-[8px] opacity-50 mb-1">${new Date(timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>` : "";
-                    const senderLabel = sender === "user" ? "You" : (sender === "admin" ? "✨ Vivid Admin" : "System");
-                    const linkedContent = linkifyText(escapeHtml(content));
-                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div>${linkedContent}`;
-                    box.appendChild(div);
+                    contentHtml = linkifyText(escapeHtml(content));
                 }
+                
+                let reactionsHtml = "";
+                if(msgReactions.length > 0) {
+                    reactionsHtml = `<div class="message-reaction">${msgReactions.join(' ')}</div>`;
+                }
+                
+                div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div>${contentHtml}${reactionsHtml}`;
+                
+                // Add long press / context menu for reactions
+                div.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    const rect = div.getBoundingClientRect();
+                    showReactionPopup(e.clientX, rect.top, msgId);
+                });
+                
+                // For mobile: touch and hold
+                let touchTimer;
+                div.addEventListener('touchstart', (e) => {
+                    touchTimer = setTimeout(() => {
+                        const rect = div.getBoundingClientRect();
+                        const touch = e.touches[0];
+                        showReactionPopup(touch.clientX, rect.top, msgId);
+                    }, 500);
+                });
+                div.addEventListener('touchend', () => {
+                    clearTimeout(touchTimer);
+                });
+                div.addEventListener('touchmove', () => {
+                    clearTimeout(touchTimer);
+                });
+                
+                box.appendChild(div);
             }
             
             if(wasScrolledToBottom || messages.length > lastMessageCount) {
@@ -666,18 +803,9 @@
             try {
                 const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: "POST", body: formData });
                 const data = await res.json();
-                if(data.ok && data.result && data.result.photo) {
-                    const fileId = data.result.photo[data.result.photo.length-1].file_id;
-                    const fileRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
-                    const fileData = await fileRes.json();
-                    if(fileData.ok) {
-                        const imageUrl = `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileData.result.file_path}`;
-                        addLocalMessage(currentUser.username, { type: "image", content: captionText || "📸 Image shared", sender: "user", timestamp: Date.now(), imageUrl: imageUrl });
-                        return true;
-                    } else {
-                        addLocalMessage(currentUser.username, { type: "image", content: captionText || "📸 Image", sender: "user", timestamp: Date.now(), imageUrl: "https://placehold.co/400x300?text=Image+Sent" });
-                        return true;
-                    }
+                if(data.ok) {
+                    addLocalMessage(currentUser.username, { type: "image", content: "📷 Image shared", sender: "user", timestamp: Date.now() });
+                    return true;
                 }
                 return false;
             } catch(e) { console.error(e); return false; }
@@ -769,18 +897,18 @@
                 document.getElementById('live-support-ui').classList.remove('hidden');
                 renderMessages();
                 if(!db[username].messages || db[username].messages.length === 0) {
-                    addLocalMessage(username, { type: "text", content: `Welcome back ${name}! Your chat history is restored. Admin replies will be tagged with @${username}.`, sender: "system", timestamp: Date.now() });
+                    addLocalMessage(username, { type: "text", content: `Welcome back ${name}! Your chat history is restored. Admin replies will be tagged with @${username}. Long press on any message to react!`, sender: "system", timestamp: Date.now() });
                 }
                 startPolling();
                 lastUpdateId = 0;
             } else {
-                db[username] = { name: name, messages: [] };
+                db[username] = { name: name, messages: [], reactions: {} };
                 saveUsersDB(db);
                 currentUser = { username: username, name: name };
                 document.getElementById('displayUser').innerText = "@" + username;
                 document.getElementById('support-auth').classList.add('hidden');
                 document.getElementById('live-support-ui').classList.remove('hidden');
-                addLocalMessage(username, { type: "text", content: `Hi ${name}! Your support session started. Admin will reply to you soon. You can send images too.`, sender: "system", timestamp: Date.now() });
+                addLocalMessage(username, { type: "text", content: `Hi ${name}! Your support session started. Admin will reply to you soon. Long press on any message to add reactions!`, sender: "system", timestamp: Date.now() });
                 startPolling();
                 lastUpdateId = 0;
             }
@@ -845,8 +973,8 @@
             }
         }
         
-        // Make openImage globally available
-        window.openImage = openImage;
+        // Hide reaction popup on click anywhere
+        document.addEventListener('click', hideReactionPopup);
         
         const chatInput = document.getElementById("liveChatInput");
         if(chatInput) {
