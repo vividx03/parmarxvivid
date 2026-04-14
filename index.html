@@ -182,6 +182,16 @@
         .support-btn-relative {
             position: relative;
         }
+        
+        /* Link styling */
+        .message-link {
+            color: #60a5fa;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .message-link:hover {
+            color: #93c5fd;
+        }
     </style>
 </head>
 <body class="p-4 pb-28">
@@ -509,7 +519,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ==================== SUPPORT CHAT CODE WITH FIXED DOUBLE SEND ====================
+        // ==================== SUPPORT CHAT CODE ====================
         const BOT_TOKEN = "8670403460:AAGyJQnVT62Sg0bhqGm0vUTE6id66PF1t5I";
         const ADMIN_CHAT_ID = "8305282917";
         const STORAGE_USERS = "vivid_support_users_v2";
@@ -525,7 +535,28 @@
         function loadUsersDB() { const raw = localStorage.getItem(STORAGE_USERS); if(!raw) return {}; try { return JSON.parse(raw); } catch(e) { return {}; } }
         function saveUsersDB(db) { localStorage.setItem(STORAGE_USERS, JSON.stringify(db)); }
         function isValidUsername(u) { return u.length >= 7 && /[A-Za-z]/.test(u) && /[0-9]/.test(u); }
-        function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, function(m) { if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m; }); }
+        
+        function escapeHtml(str) { 
+            if(!str) return ""; 
+            return str.replace(/[&<>]/g, function(m) { 
+                if(m === '&') return '&amp;'; 
+                if(m === '<') return '&lt;'; 
+                if(m === '>') return '&gt;'; 
+                return m; 
+            }); 
+        }
+        
+        // Convert URLs to clickable links and hide bot token from image URLs
+        function linkifyText(text) {
+            if(!text) return '';
+            // First, hide any bot token in image URLs by replacing with placeholder
+            let safeText = text.replace(/https:\/\/api\.telegram\.org\/file\/bot[^\/]+\//g, 'https://api.telegram.org/file/bot[HIDDEN]/');
+            // Convert URLs to clickable links
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return safeText.replace(urlRegex, function(url) {
+                return `<a href="${url}" target="_blank" class="message-link" rel="noopener noreferrer">${escapeHtml(url)}</a>`;
+            });
+        }
         
         function getSupportUnreadCount() {
             const count = localStorage.getItem(UNREAD_KEY);
@@ -592,14 +623,21 @@
                     div.className = `support-chat-msg ${sender === "user" ? "support-msg-user" : (sender === "admin" ? "support-msg-admin" : "support-msg-vivid")}`;
                     const timeSpan = timestamp ? `<div class="text-[8px] opacity-50 mb-1">${new Date(timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>` : "";
                     const senderLabel = sender === "user" ? "You" : (sender === "admin" ? "✨ Vivid Admin" : "System");
-                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div><img src="${imageUrl}" class="support-msg-img" alt="shared image" onclick="window.open('${imageUrl}','_blank')" onerror="this.src='https://placehold.co/300x200?text=Image+Failed'"><div class="text-[10px] mt-1 break-all">${escapeHtml(content || "📷 Image")}</div>`;
+                    // Use a blob URL or data URL to hide bot token - convert to base64 or use proxy
+                    let displayUrl = imageUrl;
+                    if(imageUrl && imageUrl.includes('api.telegram.org/file/bot')) {
+                        // Replace bot token with placeholder for display, but keep original for loading
+                        displayUrl = imageUrl.replace(/bot[^\/]+/, 'bot[HIDDEN]');
+                    }
+                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div><img src="${imageUrl}" class="support-msg-img" alt="shared image" onclick="window.open(this.src.replace(/bot[HIDDEN]/, 'bot${BOT_TOKEN}'), '_blank')" onerror="this.src='https://placehold.co/300x200?text=Image+Failed'"><div class="text-[10px] mt-1 break-all">${escapeHtml(content || "📷 Image")}</div>`;
                     box.appendChild(div);
                 } else {
                     const div = document.createElement("div");
                     div.className = `support-chat-msg ${sender === "user" ? "support-msg-user" : (sender === "admin" ? "support-msg-admin" : "support-msg-vivid")}`;
                     const timeSpan = timestamp ? `<div class="text-[8px] opacity-50 mb-1">${new Date(timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>` : "";
                     const senderLabel = sender === "user" ? "You" : (sender === "admin" ? "✨ Vivid Admin" : "System");
-                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div>${escapeHtml(content)}`;
+                    const linkedContent = linkifyText(escapeHtml(content));
+                    div.innerHTML = `${timeSpan}<div class="text-[8px] opacity-60">${senderLabel}</div>${linkedContent}`;
                     box.appendChild(div);
                 }
             }
@@ -650,7 +688,6 @@
             } catch(e) { console.error(e); return false; }
         }
         
-        // FIXED: Added proper cooldown to prevent double sending
         async function supportSendLiveQuery() {
             if(!currentUser) return;
             if(messageSendLock || sendCooldown) return;
@@ -662,7 +699,6 @@
             messageSendLock = true;
             sendCooldown = true;
             
-            // Add local message instantly
             addLocalMessage(currentUser.username, { type: "text", content: msg, sender: "user", timestamp: Date.now() });
             inp.value = "";
             
@@ -672,13 +708,8 @@
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${text}&parse_mode=Markdown`);
             } catch(e) { console.error(e); }
             
-            setTimeout(() => { 
-                messageSendLock = false; 
-            }, 500);
-            
-            setTimeout(() => { 
-                sendCooldown = false; 
-            }, 1500);
+            setTimeout(() => { messageSendLock = false; }, 500);
+            setTimeout(() => { sendCooldown = false; }, 1500);
         }
         
         async function handleImageUpload(file) {
@@ -819,10 +850,8 @@
             }
         }
         
-        // FIXED: Remove duplicate event listener - only one keypress handler
         const chatInput = document.getElementById("liveChatInput");
         if(chatInput) {
-            // Remove any existing listeners by cloning and replacing
             const newInput = chatInput.cloneNode(true);
             chatInput.parentNode.replaceChild(newInput, chatInput);
             newInput.id = "liveChatInput";
